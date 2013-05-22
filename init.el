@@ -63,7 +63,6 @@
 	    (package-install package)))
 	'(ido-ubiquitous
 	  flex-autopair
-	  org
 	  magit)))
 
 (defmacro after (mode &rest body)
