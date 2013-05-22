@@ -26,6 +26,11 @@
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
+;; gui stuff
+(when (display-graphic-p)
+  (fringe-mode 2)
+  (mouse-wheel-mode 1))
+
 (defun dana-find-file-hook ()
   "Buffer local settings for buffers that are actually files."
   (setq indicate-empty-lines t
