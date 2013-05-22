@@ -1,0 +1,5 @@
+auto-save-list/
+elpa/
+backups/
+org-clock-save.el
+*.elc
