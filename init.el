@@ -21,6 +21,11 @@
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
 (defun dana-find-file-hook ()
   "Buffer local settings for buffers that are actually files."
   (setq indicate-empty-lines t
