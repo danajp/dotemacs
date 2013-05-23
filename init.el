@@ -172,6 +172,7 @@
         erc-timestamp-only-if-changed-flag nil
         erc-timestamp-format "%H:%M "
         erc-datestamp-format " === %Y-%m-%d %a ===\n")
+
   (make-variable-buffer-local
    (defvar erc-last-datestamp nil))
   (defun dana-erc-insert-timestamp (string)
@@ -182,10 +183,12 @@
         (erc-insert-timestamp-left datestamp)
         (setq erc-last-datestamp datestamp))))
   (setq erc-insert-timestamp-function 'dana-erc-insert-timestamp)
+
   (defun dana-erc-generate-log-file-name (buffer target nick server port)
     "generate an erc log filename"
     (format "%s@%s:%s.txt" (downcase target) server port))
   (setq erc-genreate-log-file-name-function 'dana-erc-generate-log-file-name)
+
   (add-hook 'erc-insert-post-hook 'erc-save-buffer-in-logs)
   (add-hook 'erc-send-post-hook 'erc-save-buffer-in-logs)
 
