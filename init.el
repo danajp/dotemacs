@@ -215,3 +215,6 @@
 (global-set-key (kbd "C-c d o a") 'org-agenda)
 (global-set-key (kbd "C-c d o c") 'org-capture)
 (global-set-key (kbd "C-c d o l") 'org-store-link)
+
+(when (file-exists-p "~/.emacs.d/local.el")
+  (load-file "~/.emacs.d/local.el"))
