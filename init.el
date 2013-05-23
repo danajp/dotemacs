@@ -187,7 +187,14 @@
     (format "%s@%s:%s.txt" (downcase target) server port))
   (setq erc-genreate-log-file-name-function 'dana-erc-generate-log-file-name)
   (add-hook 'erc-insert-post-hook 'erc-save-buffer-in-logs)
-  (add-hook 'erc-send-post-hook 'erc-save-buffer-in-logs))
+  (add-hook 'erc-send-post-hook 'erc-save-buffer-in-logs)
+
+  ;; modeline stuf
+  (setq erc-track-exclude '("&bitlbee")
+        erc-track-exclude-server-buffer t
+        erc-track-shorten-start 5
+        erc-track-shorten-cutoff 10)
+  (erc-spelling-mode 1))
 
 (require 'erc)
 
