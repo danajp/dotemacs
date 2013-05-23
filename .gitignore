@@ -3,3 +3,4 @@ elpa/
 backups/
 org-clock-save.el
 *.elc
+local.el
