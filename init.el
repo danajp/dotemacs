@@ -201,7 +201,7 @@
 
 (require 'erc)
 
-;; browser-url customization
+;; browse-url customization
 (when (fboundp 'browse-url)
   (setq browse-url-browser-function 'browse-url-default-browser))
 
