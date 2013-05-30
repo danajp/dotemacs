@@ -2,6 +2,8 @@
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
+(add-to-list 'load-path "~/.emacs.d/lib")
+
 (setq inhibit-startup-screen t)
 
 (add-to-list 'backup-directory-alist '("." . "~/.emacs.d/backups"))
@@ -137,6 +139,14 @@
   (add-hook 'php-mode-hook '(lambda ()
                               (message "setting style to php-pear")
                               (c-set-style "php-pear-k&r-mods"))))
+
+;; pl/sql
+(after 'plsql
+  (setq plsql-indent 4)
+  (add-to-list 'auto-mode-alist '("\\.pk[bs]" . plsql-mode)))
+
+(autoload 'plsql "plsql")
+(require 'plsql)
 
 ;; uniquify
 (after 'uniquify
