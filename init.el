@@ -201,6 +201,10 @@
 
 (require 'erc)
 
+;; tramp
+(after 'tramp
+  (setq tramp-default-method "ssh"))
+
 ;; browse-url customization
 (when (fboundp 'browse-url)
   (setq browse-url-browser-function 'browse-url-default-browser))
