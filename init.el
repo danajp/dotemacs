@@ -217,6 +217,8 @@
 (global-set-key (kbd "C-c d w") 'backward-kill-word)
 (global-set-key (kbd "C-c d e") 'rgrep)
 (global-set-key (kbd "C-c d s") 'toggle-window-split)
+(global-set-key (kbd "C-c d R") 'revert-buffer)
+
 ;; org-mode
 (global-set-key (kbd "C-c d o i") 'org-clock-in)
 (global-set-key (kbd "C-c d o o") 'org-clock-out)
@@ -225,6 +227,8 @@
 (global-set-key (kbd "C-c d o a") 'org-agenda)
 (global-set-key (kbd "C-c d o c") 'org-capture)
 (global-set-key (kbd "C-c d o l") 'org-store-link)
+
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 (when (file-exists-p "~/.emacs.d/local.el")
   (load-file "~/.emacs.d/local.el"))
