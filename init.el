@@ -28,6 +28,8 @@
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
+(set-default-font "Terminus-11")
+
 ;; gui stuff
 (when (display-graphic-p)
   (fringe-mode 2)
