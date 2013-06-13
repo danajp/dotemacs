@@ -2158,11 +2158,8 @@ save-excursion of `plsql-indent'."
       (setq lines-indented (1+ lines-indented)))
     (message "Indenting region...done")))
 
-(defun plsql-mode ()
+(define-derived-mode plsql-mode sql-mode "PL/SQL"
   "Programming support mode for PL/SQL code."
-
-  (interactive)
-  (require 'sql)
 
 ;;   (modify-syntax-entry ?# "w" sql-mode-syntax-table)
 ;;   (modify-syntax-entry ?_ "w" sql-mode-syntax-table)
@@ -2172,10 +2169,6 @@ save-excursion of `plsql-indent'."
 	(append plsql-oracle-font-lock-fix-re ;; override some bad bits
 		sql-mode-oracle-font-lock-keywords))
   (setq font-lock-mark-block-function 'mark-visible)
-  (sql-mode)
-
-  (setq major-mode 'plsql-mode)
-  (setq mode-name "PL/SQL")
 
   (if plsql-uses-font-lock
       (progn
@@ -2190,7 +2183,6 @@ save-excursion of `plsql-indent'."
   (set (make-local-variable 'indent-region-function) 'plsql-indent-region)
   (set (make-local-variable 'align-mode-rules-list) 'plsql-align-rules-list)
   (local-set-key [(return)] 'newline-and-indent)
-  (run-hooks 'plsql-mode-hook)
   )
 
 (provide 'plsql)
