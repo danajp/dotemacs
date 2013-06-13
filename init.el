@@ -1,12 +1,15 @@
+;; --- general config ------------------------------------------------
+;; no menus, buttons, scrollbars or startup screen
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(setq inhibit-startup-screen t)
 
 (add-to-list 'load-path "~/.emacs.d/lib")
 
-(setq inhibit-startup-screen t)
-
+;; put backups in one place instead of littering the file system with files~
 (add-to-list 'backup-directory-alist '("." . "~/.emacs.d/backups"))
+
 (global-font-lock-mode t)
 (show-paren-mode t)
 (column-number-mode 1)
@@ -17,30 +20,41 @@
       next-line-add-newlines nil
       grep-command "grep -rni")
 
+;; tabs are evil
 (setq-default indent-tabs-mode nil
               tab-width 4)
 
+;; I want to use these functions
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
+;; default to utf-8 everywhere
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
-(set-default-font "Terminus-11")
+;; don't make me type "yes" or "no"
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;; browse-url customization
+(when (fboundp 'browse-url)
+  (setq browse-url-browser-function 'browse-url-default-browser))
 
 ;; gui stuff
 (when (display-graphic-p)
   (fringe-mode 2)
-  (mouse-wheel-mode 1))
+  (mouse-wheel-mode 1)
+  (set-default-font "Terminus-11"))
 
+;; things I want in every file buffer
 (defun dana-find-file-hook ()
   "Buffer local settings for buffers that are actually files."
   (setq indicate-empty-lines t
-	show-trailing-whitespace t))
+        show-trailing-whitespace t))
 (add-hook 'find-file-hooks 'dana-find-file-hook)
 
+;; utility functions
 (defun dana-buffer-name-to-kill-ring ()
   "Put the name of the current buffer into the kill ring"
   (interactive)
@@ -51,15 +65,9 @@
   (interactive)
   (kill-new (buffer-file-name (current-buffer))))
 
-;; elpa setup
-(require 'package)
-(setq package-user-dir "~/.emacs.d/elpa/")
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives '("elpa" . "http://tromey.com/elpa/"))
-
-
 (defun dana-install-packages ()
-  "Install packages that I almost always want"
+  "Install packages that I almost always want. This is for
+bootstrapping a fresh install of emacs."
   (interactive)
   (package-refresh-contents)
   (mapc '(lambda (package)
@@ -69,12 +77,26 @@
 	  flex-autopair
 	  magit)))
 
+;; elpa setup
+(require 'package)
+(setq package-user-dir "~/.emacs.d/elpa/")
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("elpa" . "http://tromey.com/elpa/"))
+
+
 (defmacro after (mode &rest body)
-  "`eval-after-load' MODE evaluate BODY"
+  "`eval-after-load' MODE evaluate BODY.
+
+This allows us to define configuration for features that aren't
+always installed and only eval that configuration after the feature is loaded.
+
+ELPA packages usually provide an -autoloads feature which we can
+use to determine if the package is installed/loaded."
   (declare (indent defun))
   `(eval-after-load ,mode
      '(progn ,@body)))
 
+;; --- configure elpa packages ---------------------------------------
 ;; ido
 (after 'ido-ubiquitous-autoloads
   (setq ido-enable-flex-matching t)
@@ -142,6 +164,8 @@
                               (message "setting style to php-pear")
                               (c-set-style "php-pear-k&r-mods"))))
 
+;; --- configure non-elpa packages -----------------------------------
+
 ;; pl/sql
 (after 'plsql
   (setq plsql-indent 4)
@@ -149,6 +173,8 @@
 
 (autoload 'plsql "plsql")
 (require 'plsql)
+
+;; -- configure builtin packages -------------------------------------
 
 ;; uniquify
 (after 'uniquify
@@ -217,10 +243,6 @@
 (after 'tramp
   (setq tramp-default-method "ssh"))
 
-;; browse-url customization
-(when (fboundp 'browse-url)
-  (setq browse-url-browser-function 'browse-url-default-browser))
-
 ;; command == meta on mac
 (setq mac-command-modifier 'meta)
 
@@ -244,7 +266,6 @@
 (global-set-key (kbd "C-c d o c") 'org-capture)
 (global-set-key (kbd "C-c d o l") 'org-store-link)
 
-(defalias 'yes-or-no-p 'y-or-n-p)
-
+;; load additional local configuration if it exists
 (when (file-exists-p "~/.emacs.d/local.el")
   (load-file "~/.emacs.d/local.el"))
