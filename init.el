@@ -5,8 +5,6 @@
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (setq inhibit-startup-screen t)
 
-(add-to-list 'load-path "~/.emacs.d/lib")
-
 ;; put backups in one place instead of littering the file system with files~
 (add-to-list 'backup-directory-alist '("." . "~/.emacs.d/backups"))
 
@@ -165,6 +163,7 @@ use to determine if the package is installed/loaded."
                               (c-set-style "php-pear-k&r-mods"))))
 
 ;; --- configure non-elpa packages -----------------------------------
+(add-to-list 'load-path "~/.emacs.d/lib")
 
 ;; pl/sql
 (after 'plsql
