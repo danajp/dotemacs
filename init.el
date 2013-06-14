@@ -232,6 +232,7 @@ use to determine if the package is installed/loaded."
   ;; modeline stuf
   (setq erc-track-exclude '("&bitlbee")
         erc-track-exclude-server-buffer t
+        erc-track-exclude-types '("JOIN" "PART")
         erc-track-shorten-start 5
         erc-track-shorten-cutoff 10)
   (erc-spelling-mode 1))
