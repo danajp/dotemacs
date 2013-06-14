@@ -5,3 +5,5 @@ org-clock-save.el
 *.elc
 local.el
 url/cookies
+tramp
+bookmarks
