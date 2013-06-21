@@ -163,6 +163,10 @@ use to determine if the package is installed/loaded."
                               (message "setting style to php-pear")
                               (c-set-style "php-pear-k&r-mods"))))
 
+;; markdown
+(after 'markdown-mode-autoloads
+  (add-to-list 'auto-mode-alist '("\\.md" . markdown-mode)))
+
 ;; --- configure non-elpa packages -----------------------------------
 (add-to-list 'load-path "~/.emacs.d/lib")
 
