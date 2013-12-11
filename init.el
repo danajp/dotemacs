@@ -176,6 +176,15 @@ use to determine if the package is installed/loaded."
 (after 'zencoding-mode-autoloads
   (add-hook 'sgml-mode-hook 'zencoding-mode))
 
+;; org-present
+(after 'org-present-autoloads
+  (add-hook 'org-present-mode-hook (lambda ()
+                                     (org-present-big)
+                                     (org-display-inline-images)))
+  (add-hook 'org-present-mode-quit-hook (lambda ()
+                                          (org-present-small)
+                                          (org-remove-inline-images))))
+
 ;; --- configure non-elpa packages -----------------------------------
 (add-to-list 'load-path "~/.emacs.d/lib")
 
