@@ -168,6 +168,14 @@ use to determine if the package is installed/loaded."
 (after 'markdown-mode-autoloads
   (add-to-list 'auto-mode-alist '("\\.md" . markdown-mode)))
 
+;; web-mode
+(after 'web-mode-autoloads
+  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)))
+
+;; zencoding-mode
+(after 'zencoding-mode-autoloads
+  (add-hook 'sgml-mode-hook 'zencoding-mode))
+
 ;; --- configure non-elpa packages -----------------------------------
 (add-to-list 'load-path "~/.emacs.d/lib")
 
