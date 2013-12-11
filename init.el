@@ -229,7 +229,7 @@ use to determine if the package is installed/loaded."
 
   (defun dana-erc-generate-log-file-name (buffer target nick server port)
     "generate an erc log filename"
-    (format "%s@%s:%s.txt" (downcase target) server port))
+    (format "%s.txt" (downcase target)))
   (setq erc-generate-log-file-name-function 'dana-erc-generate-log-file-name)
 
   (add-hook 'erc-insert-post-hook 'erc-save-buffer-in-logs)
