@@ -40,10 +40,9 @@
   (setq browse-url-browser-function 'browse-url-default-browser))
 
 ;; gui stuff
-(when (display-graphic-p)
-  (fringe-mode 2)
-  (mouse-wheel-mode 1)
-  (set-default-font "Terminus-11"))
+(add-to-list 'default-frame-alist '(font . "Terminus-11"))
+(add-to-list 'default-frame-alist '(mouse-wheel-mode 1))
+(add-to-list 'default-frame-alist '(fringe-mode 2))
 
 ;; things I want in every file buffer
 (defun dana-find-file-hook ()
