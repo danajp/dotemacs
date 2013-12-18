@@ -71,7 +71,6 @@ bootstrapping a fresh install of emacs."
 	  (unless (package-installed-p package)
 	    (package-install package)))
 	'(ido-ubiquitous
-	  flex-autopair
 	  magit)))
 
 ;; elpa setup
@@ -101,9 +100,6 @@ use to determine if the package is installed/loaded."
   (ido-mode 1)
   (ido-ubiquitous-mode 1))
 
-;; autopair
-(after 'flex-autopair-autoloads
-  (flex-autopair-mode 1))
 
 ;; org
 (after 'org
