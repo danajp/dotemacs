@@ -101,7 +101,8 @@ use to determine if the package is installed/loaded."
   (ido-ubiquitous-mode 1))
 
 (after 'smartparens-autoloads
-  (smartparens-global-mode))
+  (smartparens-global-mode)
+  (show-smartparens-global-mode))
 
 ;; org
 (after 'org
