@@ -71,7 +71,12 @@ bootstrapping a fresh install of emacs."
 	  (unless (package-installed-p package)
 	    (package-install package)))
 	'(ido-ubiquitous
-	  magit)))
+	  magit
+      smartparens
+      markdown-mode
+      yaml-mode
+      web-mode
+      zencoding-mode)))
 
 ;; elpa setup
 (require 'package)
