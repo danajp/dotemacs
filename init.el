@@ -45,24 +45,24 @@
 (add-to-list 'default-frame-alist '(fringe-mode 2))
 
 ;; things I want in every file buffer
-(defun dana-find-file-hook ()
+(defun my-find-file-hook ()
   "Buffer local settings for buffers that are actually files."
   (setq indicate-empty-lines t
         show-trailing-whitespace t))
-(add-hook 'find-file-hooks 'dana-find-file-hook)
+(add-hook 'find-file-hooks 'my-find-file-hook)
 
 ;; utility functions
-(defun dana-buffer-name-to-kill-ring ()
+(defun my-buffer-name-to-kill-ring ()
   "Put the name of the current buffer into the kill ring"
   (interactive)
   (kill-new (buffer-name (current-buffer))))
 
-(defun dana-buffer-file-name-to-kill-ring ()
+(defun my-buffer-file-name-to-kill-ring ()
   "Put the name of the current buffer into the kill ring"
   (interactive)
   (kill-new (buffer-file-name (current-buffer))))
 
-(defun dana-install-packages ()
+(defun my-install-packages ()
   "Install packages that I almost always want. This is for
 bootstrapping a fresh install of emacs."
   (interactive)
@@ -239,19 +239,19 @@ use to determine if the package is installed/loaded."
 
   (make-variable-buffer-local
    (defvar erc-last-datestamp nil))
-  (defun dana-erc-insert-timestamp (string)
+  (defun my-erc-insert-timestamp (string)
     "I don't remember what this does"
     (erc-insert-timestamp-left string)
     (let ((datestamp (erc-format-timestamp (current-time) erc-datestamp-format)))
       (unless (string= datestamp erc-last-datestamp)
         (erc-insert-timestamp-left datestamp)
         (setq erc-last-datestamp datestamp))))
-  (setq erc-insert-timestamp-function 'dana-erc-insert-timestamp)
+  (setq erc-insert-timestamp-function 'my-erc-insert-timestamp)
 
-  (defun dana-erc-generate-log-file-name (buffer target nick server port)
+  (defun my-erc-generate-log-file-name (buffer target nick server port)
     "generate an erc log filename"
     (format "%s.txt" (downcase target)))
-  (setq erc-generate-log-file-name-function 'dana-erc-generate-log-file-name)
+  (setq erc-generate-log-file-name-function 'my-erc-generate-log-file-name)
 
   (add-hook 'erc-insert-post-hook 'erc-save-buffer-in-logs)
   (add-hook 'erc-send-post-hook 'erc-save-buffer-in-logs)
