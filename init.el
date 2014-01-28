@@ -62,30 +62,6 @@
   (interactive)
   (kill-new (buffer-file-name (current-buffer))))
 
-(defun my-install-packages ()
-  "Install packages that I almost always want. This is for
-bootstrapping a fresh install of emacs."
-  (interactive)
-  (package-refresh-contents)
-  (mapc '(lambda (package)
-	  (unless (package-installed-p package)
-	    (package-install package)))
-	'(ido-ubiquitous
-	  magit
-      smartparens
-      markdown-mode
-      yaml-mode
-      web-mode
-      zencoding-mode)))
-
-;; elpa setup
-(require 'package)
-(setq package-user-dir "~/.emacs.d/elpa/")
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives '("elpa" . "http://tromey.com/elpa/"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
-
-
 (defmacro after (mode &rest body)
   "`eval-after-load' MODE evaluate BODY.
 
@@ -97,6 +73,10 @@ use to determine if the package is installed/loaded."
   (declare (indent defun))
   `(eval-after-load ,mode
      '(progn ,@body)))
+
+;; --- cask setup ----------------------------------------------------
+(require 'cask (expand-file-name "~/.cask/cask"))
+(cask-initialize)
 
 ;; --- configure elpa packages ---------------------------------------
 ;; ido

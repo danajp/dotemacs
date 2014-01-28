@@ -7,3 +7,4 @@ local.el
 url/cookies
 tramp
 bookmarks
+.cask/
