@@ -169,6 +169,10 @@ use to determine if the package is installed/loaded."
                                           (org-present-small)
                                           (org-remove-inline-images))))
 
+(after 'auto-complete-autoloads
+  (require 'auto-complete-config)
+  (ac-config-default))
+
 ;; --- configure non-elpa packages -----------------------------------
 (add-to-list 'load-path "~/.emacs.d/lib")
 
