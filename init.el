@@ -253,8 +253,9 @@ use to determine if the package is installed/loaded."
 
 ;; tramp
 (after 'tramp
-  (setq tramp-default-method "ssh")
+  (setq tramp-default-method "ssh"))
 
+(after 'tramp-sh
   ;; fix for http://debbugs.gnu.org/cgi/bugreport.cgi?bug=17238 until it's released in 24.4
   (defun tramp-sh-handle-file-truename (filename &optional counter prev-dirs)
     "Like `file-truename' for Tramp files."
