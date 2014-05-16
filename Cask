@@ -12,7 +12,7 @@
 (depends-on "git-commit-mode")
 (depends-on "git-rebase-mode")
 (depends-on "ido-ubiquitous")
-(depends-on "magit")
+(depends-on "magit" :git "git@github.com:magit/magit.git" :ref "1946ce5180")
 (depends-on "markdown-mode")
 (depends-on "org")
 (depends-on "org-present")
