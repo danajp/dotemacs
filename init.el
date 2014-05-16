@@ -173,6 +173,9 @@ use to determine if the package is installed/loaded."
   (require 'auto-complete-config)
   (ac-config-default))
 
+(after 'projectile-autoloads
+  (projectile-global-mode))
+
 ;; --- configure non-elpa packages -----------------------------------
 (add-to-list 'load-path "~/.emacs.d/lib")
 
