@@ -81,7 +81,8 @@ use to determine if the package is installed/loaded."
 ;; --- configure elpa packages ---------------------------------------
 ;; ido
 (after 'ido-ubiquitous-autoloads
-  (setq ido-enable-flex-matching t)
+  (setq ido-enable-flex-matching t
+        ido-auto-merge-work-directories-length -1)
   (ido-mode 1)
   (ido-ubiquitous-mode 1))
 
