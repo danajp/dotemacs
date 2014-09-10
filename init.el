@@ -107,10 +107,8 @@ use to determine if the package is installed/loaded."
 	org-context-in-file-links 1
 	org-clock-out-remove-zero-time-clocks t)
   (setq org-agenda-files '("~/org/refile.org"
-                           "~/org/projects.org"
-                           "~/org/day-to-day.org"
-                           "~/org/consult.org"
-                           "~/org/overhead.org"))
+                           "~/org/diary.org"
+                           "~/org/xls"))
   (setq org-refile-targets '((nil :maxlevel . 2)
                              (org-agenda-files :maxlevel . 2)))
   (setq org-refile-use-outline-path 'file
@@ -118,10 +116,27 @@ use to determine if the package is installed/loaded."
         org-outline-path-complete-in-steps nil
         org-refile-allow-creating-parent-nodes 'confirm)
   ;; capture templates
-  (setq org-capture-templates `(("t" "todo" entry (file ,org-default-notes-file) "* TODO %?\n  %U\n  %a\n   %i" :clock-in t :clock-resume t)
-                                ("i" "interuption" entry (file ,org-default-notes-file) "* %?\n  %U\n  %a\n   %i" :clock-in t :clock-resume t)
-                                ("j" "jira" entry (file ,org-default-notes-file) "%^{JIRA}p* %?\n  %U\n  %a\n   %i" :clock-in t :clock-resume t)
-                                ("c" "code review item" entry (file ,org-default-notes-file) "%^{DEVELOPER}p* TODO %?\n  %U\n  %a\n  %i")))
+  (setq org-capture-templates `(("t" "todo" entry (file ,org-default-notes-file)
+                                 "* TODO %?\n  %U\n  %a\n   %i" :clock-in t :clock-resume t)
+                                ("m" "meeting" entry (file ,org-default-notes-file)
+                                 "* MEETING %? :MEETING:\n%U" :clock-in t :clock-resume t)
+                                ("i" "interuption" entry (file ,org-default-notes-file)
+                                 "* INTERUPTION with %? :INTERUPTION:\n%U" :clock-in t :clock-resume t)
+                                ("j" "journal" entry (file+datetree "~/org/diary.org")
+                                 "* %?\n%U\n" :clock-in t :clock-resume t)))
+
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+          (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "MEETING")))
+
+  (setq org-todo-keyword-faces
+        '(("TODO" . org-todo)
+          ("NEXT" . org-scheduled)
+          ("DONE" . org-done)
+          ("WAITING" . org-warning)
+          ("HOLD" . org-done)
+          ("CANCELLED" . org-done)
+          ("MEETING" . org-done)))
   ;; make sure we save all the time
   (add-hook 'org-clock-in-hook 'org-save-all-org-buffers)
   (add-hook 'org-clock-out-hook 'org-save-all-org-buffers))
