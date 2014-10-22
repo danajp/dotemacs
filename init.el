@@ -177,6 +177,9 @@ use to determine if the package is installed/loaded."
 (after 'projectile-autoloads
   (projectile-global-mode))
 
+(after 'haskell-mode-autoloads
+  (add-hook 'haskell-mode-hook 'haskell-simple-indent-mode))
+
 ;; --- configure non-elpa packages -----------------------------------
 (add-to-list 'load-path "~/.emacs.d/lib")
 
