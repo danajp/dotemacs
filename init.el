@@ -62,6 +62,18 @@
   (interactive)
   (kill-new (buffer-file-name (current-buffer))))
 
+
+(defun my-upcase-rectangle-line (startcol endcol)
+  (when (= (move-to-column startcol) startcol)
+    (upcase-region (point) (progn
+                             (move-to-column endcol 'coerce)
+                             (point)))))
+
+(defun my-upcase-rectangle (b e)
+  "upcase in a rectangle"
+  (interactive "r")
+  (apply-on-rectangle 'my-upcase-rectangle-line b e))
+
 (defmacro after (mode &rest body)
   "`eval-after-load' MODE evaluate BODY.
 
@@ -402,6 +414,7 @@ use to determine if the package is installed/loaded."
 (global-set-key (kbd "C-c d e") 'rgrep)
 (global-set-key (kbd "C-c d s") 'toggle-window-split)
 (global-set-key (kbd "C-c d R") 'revert-buffer)
+(global-set-key (kbd "C-x r u") 'my-upcase-rectangle)
 
 ;; org-mode
 (global-set-key (kbd "C-c d o i") 'org-clock-in)
