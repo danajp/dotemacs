@@ -71,7 +71,7 @@ always installed and only eval that configuration after the feature is loaded.
 ELPA packages usually provide an -autoloads feature which we can
 use to determine if the package is installed/loaded."
   (declare (indent defun))
-  `(eval-after-load ,mode
+  `(eval-after-load (symbol-name ,mode)
      '(progn ,@body)))
 
 ;; --- cask setup ----------------------------------------------------
