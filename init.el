@@ -139,7 +139,9 @@ use to determine if the package is installed/loaded."
           ("MEETING" . org-done)))
   ;; make sure we save all the time
   (add-hook 'org-clock-in-hook 'org-save-all-org-buffers)
-  (add-hook 'org-clock-out-hook 'org-save-all-org-buffers))
+  (add-hook 'org-clock-out-hook 'org-save-all-org-buffers)
+  (setq org-agenda-clockreport-parameter-plist
+        '(:link t :maxlevel 3 :step day :stepskip0 t :fileskip0 t)))
 
 ;; magit
 (after 'magit-autoloads
