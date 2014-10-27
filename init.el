@@ -166,17 +166,11 @@ use to determine if the package is installed/loaded."
 
 ;; php
 (after 'php-mode-autoloads
-  (c-add-style "php-pear-k&r-mods" '("k&r"
-                                     (c-basic-offset . 4)
-                                     (c-offsets-alist . ((case-label . +)
-                                                         (arglist-close . 0)
-                                                         (inline-open . 0)))
-                                     (c-hanging-braces-alist . ((defun-open after)
-                                                                (inline-open after)
-                                                                (substatement-open after)))))
   (add-hook 'php-mode-hook '(lambda ()
-                              (message "setting style to php-pear")
-                              (c-set-style "php-pear-k&r-mods"))))
+                              (php-enable-psr2-coding-style)
+                              ;; psr2 turns this off, turn it back on
+                              (setq show-trailing-whitespace t)))
+  (add-to-list 'auto-mode-alist '("\\.inc" . php-mode)))
 
 ;; markdown
 (after 'markdown-mode-autoloads
