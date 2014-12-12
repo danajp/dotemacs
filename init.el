@@ -74,6 +74,13 @@
   (interactive "r")
   (apply-on-rectangle 'my-upcase-rectangle-line b e))
 
+
+(defun my-ddg-search (q)
+  "Run a search on DuckDuckGo"
+  (interactive "ssearch duckduckgo: ")
+  (browse-url (concat "https://duckduckgo.com/?q=" (url-hexify-string q))))
+
+
 (defmacro after (mode &rest body)
   "`eval-after-load' MODE evaluate BODY.
 
@@ -407,7 +414,7 @@ use to determine if the package is installed/loaded."
 (global-set-key (kbd "C-c d t") 'delete-trailing-whitespace)
 (global-set-key (kbd "C-c d w") 'backward-kill-word)
 (global-set-key (kbd "C-c d e") 'rgrep)
-(global-set-key (kbd "C-c d s") 'toggle-window-split)
+(global-set-key (kbd "C-c d s") 'my-ddg-search)
 (global-set-key (kbd "C-c d R") 'revert-buffer)
 (global-set-key (kbd "C-x r u") 'my-upcase-rectangle)
 
