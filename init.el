@@ -44,6 +44,13 @@
 (add-to-list 'default-frame-alist '(mouse-wheel-mode . 1))
 (add-to-list 'default-frame-alist '(fringe-mode . 2))
 
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+              '(lambda (f)
+                 (with-selected-frame f
+                   (when (window-system f)
+                     (color-theme-sanityinc-solarized-dark))))))
+
 ;; things I want in every file buffer
 (defun my-find-file-hook ()
   "Buffer local settings for buffers that are actually files."
