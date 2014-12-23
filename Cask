@@ -19,6 +19,7 @@
 (depends-on "pallet")
 (depends-on "php-mode")
 (depends-on "s")
+(depends-on "shut-up")
 (depends-on "smartparens")
 (depends-on "web-mode")
 (depends-on "yaml-mode")
