@@ -41,8 +41,8 @@
 
 ;; gui stuff
 (add-to-list 'default-frame-alist '(font . "Terminus-11"))
-(add-to-list 'default-frame-alist '(mouse-wheel-mode 1))
-(add-to-list 'default-frame-alist '(fringe-mode 2))
+(add-to-list 'default-frame-alist '(mouse-wheel-mode . 1))
+(add-to-list 'default-frame-alist '(fringe-mode . 2))
 
 ;; things I want in every file buffer
 (defun my-find-file-hook ()
