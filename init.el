@@ -221,6 +221,9 @@ use to determine if the package is installed/loaded."
 (after 'haskell-mode-autoloads
   (add-hook 'haskell-mode-hook 'haskell-simple-indent-mode))
 
+(after 'js-mode-autoloads
+  (setq js-indent-level 2))
+
 ;; --- configure non-elpa packages -----------------------------------
 (add-to-list 'load-path "~/.emacs.d/lib")
 
