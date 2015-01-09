@@ -215,6 +215,9 @@ use to determine if the package is installed/loaded."
 (after 'projectile-autoloads
   (projectile-global-mode))
 
+(after 'projectile-rails-autoloads
+  (add-hook 'projectile-mode-hook 'projectile-rails-on))
+
 (after 'haskell-mode-autoloads
   (add-hook 'haskell-mode-hook 'haskell-simple-indent-mode))
 
