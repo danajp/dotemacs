@@ -197,7 +197,7 @@ use to determine if the package is installed/loaded."
 
 ;; zencoding-mode
 (after 'zencoding-mode-autoloads
-  (add-hook 'sgml-mode-hook 'zencoding-mode))
+  (add-hook 'web-mode-hook 'zencoding-mode))
 
 ;; org-present
 (after 'org-present-autoloads
