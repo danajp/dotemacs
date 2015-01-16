@@ -117,7 +117,8 @@ use to determine if the package is installed/loaded."
 (after 'smartparens-autoloads
   (smartparens-global-mode)
   (show-smartparens-global-mode)
-  (require 'smartparens-config))
+  (require 'smartparens-config)
+  (sp-local-pair 'web-mode "<" ">" :actions nil))
 
 ;; org
 (after 'org
