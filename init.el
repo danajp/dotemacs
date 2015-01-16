@@ -195,7 +195,9 @@ use to determine if the package is installed/loaded."
 ;; web-mode
 (after 'web-mode-autoloads
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.html?\\.erb\\'" . web-mode)))
+  (add-to-list 'auto-mode-alist '("\\.html?\\.erb\\'" . web-mode))
+  (setq web-mode-markup-indent-offset 2
+        web-mode-code-indent-offset 2))
 
 ;; zencoding-mode
 (after 'zencoding-mode-autoloads
