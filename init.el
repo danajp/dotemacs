@@ -18,6 +18,8 @@
       next-line-add-newlines nil
       grep-command "grep -rni")
 
+(add-to-list 'grep-find-ignored-directories "log")
+
 ;; tabs are evil
 (setq-default indent-tabs-mode nil
               tab-width 4)
@@ -213,7 +215,8 @@ use to determine if the package is installed/loaded."
   (ac-config-default))
 
 (after 'projectile-autoloads
-  (projectile-global-mode))
+  (projectile-global-mode)
+  (add-to-list 'projectile-globally-ignored-directories "log"))
 
 (after 'projectile-rails-autoloads
   (add-hook 'projectile-mode-hook 'projectile-rails-on))
