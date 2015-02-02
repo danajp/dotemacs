@@ -117,8 +117,7 @@ use to determine if the package is installed/loaded."
 (after 'smartparens-autoloads
   (smartparens-global-mode)
   (show-smartparens-global-mode)
-  (require 'smartparens-config)
-  (sp-local-pair 'web-mode "<" ">" :actions nil))
+  (require 'smartparens-config))
 
 ;; org
 (after 'org
@@ -198,7 +197,9 @@ use to determine if the package is installed/loaded."
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.html?\\.erb\\'" . web-mode))
   (setq web-mode-markup-indent-offset 2
-        web-mode-code-indent-offset 2))
+        web-mode-code-indent-offset 2)
+  (after 'web-mode-autoloads
+    (sp-local-pair 'web-mode "<" ">" :actions nil)))
 
 ;; zencoding-mode
 (after 'zencoding-mode-autoloads
