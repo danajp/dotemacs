@@ -1,3 +1,15 @@
+(defmacro after (mode &rest body)
+  "`eval-after-load' MODE evaluate BODY.
+
+This allows us to define configuration for features that aren't
+always installed and only eval that configuration after the feature is loaded.
+
+ELPA packages usually provide an -autoloads feature which we can
+use to determine if the package is installed/loaded."
+  (declare (indent defun))
+  `(eval-after-load (symbol-name ,mode)
+     '(progn ,@body)))
+
 ;; --- general config ------------------------------------------------
 ;; no menus, buttons, scrollbars or startup screen
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -18,7 +30,9 @@
       next-line-add-newlines nil
       grep-command "grep -rni")
 
-(add-to-list 'grep-find-ignored-directories "log")
+(after 'grep
+  (add-to-list 'grep-find-ignored-directories "log")
+  (add-to-list 'grep-find-ignored-directories "tmp"))
 
 ;; tabs are evil
 (setq-default indent-tabs-mode nil
@@ -88,19 +102,6 @@
   "Run a search on DuckDuckGo"
   (interactive "ssearch duckduckgo: ")
   (browse-url (concat "https://duckduckgo.com/?q=" (url-hexify-string q))))
-
-
-(defmacro after (mode &rest body)
-  "`eval-after-load' MODE evaluate BODY.
-
-This allows us to define configuration for features that aren't
-always installed and only eval that configuration after the feature is loaded.
-
-ELPA packages usually provide an -autoloads feature which we can
-use to determine if the package is installed/loaded."
-  (declare (indent defun))
-  `(eval-after-load (symbol-name ,mode)
-     '(progn ,@body)))
 
 ;; --- cask setup ----------------------------------------------------
 (require 'cask (expand-file-name "~/.cask/cask"))
