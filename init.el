@@ -235,6 +235,10 @@ use to determine if the package is installed/loaded."
 
 (after 'scss-mode
   (setq css-indent-offset 2))
+
+(after 'ace-window-autoloads
+  (setq aw-keys '(?a ?s ?d ?f ?j ?k ?l))
+  (global-set-key (kbd "M-p") 'ace-window))
 ;; --- configure non-elpa packages -----------------------------------
 (add-to-list 'load-path "~/.emacs.d/lib")
 
