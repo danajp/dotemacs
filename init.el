@@ -204,7 +204,8 @@ use to determine if the package is installed/loaded."
 
 ;; zencoding-mode
 (after 'zencoding-mode-autoloads
-  (add-hook 'web-mode-hook 'zencoding-mode))
+  (add-hook 'web-mode-hook 'zencoding-mode)
+  (setq zencoding-indentation 2))
 
 ;; org-present
 (after 'org-present-autoloads
