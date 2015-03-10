@@ -240,6 +240,9 @@ use to determine if the package is installed/loaded."
 (after 'ace-window-autoloads
   (setq aw-keys '(?a ?s ?d ?f ?j ?k ?l))
   (global-set-key (kbd "M-p") 'ace-window))
+
+(after 'ruby-mode
+  (setq ruby-align-to-stmt-keywords t))
 ;; --- configure non-elpa packages -----------------------------------
 (add-to-list 'load-path "~/.emacs.d/lib")
 
