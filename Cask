@@ -8,8 +8,6 @@
 (depends-on "dash")
 (depends-on "epl")
 (depends-on "f")
-(depends-on "git-commit-mode")
-(depends-on "git-rebase-mode")
 (depends-on "ido-ubiquitous")
 (depends-on "magit")
 (depends-on "markdown-mode")
