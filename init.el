@@ -245,6 +245,15 @@ use to determine if the package is installed/loaded."
 
 (after 'ruby-mode
   (setq ruby-align-to-stmt-keywords t))
+
+(setq rbenv-installation-directory "/usr/local/bin/rbenv")
+(after 'rbenv-autoloads
+  (require 'rbenv)
+  (global-rbenv-mode))
+
+(after 'rspec-mode-autoloads
+  (require 'rspec-mode))
+
 ;; --- configure non-elpa packages -----------------------------------
 (add-to-list 'load-path "~/.emacs.d/lib")
 
