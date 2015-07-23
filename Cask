@@ -24,3 +24,7 @@
 (depends-on "web-mode")
 (depends-on "yaml-mode")
 (depends-on "zencoding-mode")
+(depends-on "projectile")
+(depends-on "projectile-rails")
+(depends-on "scss-mode")
+(depends-on "ace-window")
