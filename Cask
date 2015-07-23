@@ -3,7 +3,6 @@
 (source "elpa" "http://tromey.com/elpa/")
 (source melpa-stable)
 
-(depends-on "cask")
 (depends-on "coffee-mode")
 (depends-on "color-theme-sanityinc-solarized")
 (depends-on "dash")
@@ -16,7 +15,6 @@
 (depends-on "markdown-mode")
 (depends-on "org")
 (depends-on "org-present")
-(depends-on "pallet")
 (depends-on "php-mode")
 (depends-on "s")
 (depends-on "shut-up")
