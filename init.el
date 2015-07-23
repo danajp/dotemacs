@@ -32,7 +32,9 @@ use to determine if the package is installed/loaded."
 
 (after 'grep
   (add-to-list 'grep-find-ignored-directories "log")
-  (add-to-list 'grep-find-ignored-directories "tmp"))
+  (add-to-list 'grep-find-ignored-directories "tmp")
+  (add-to-list 'grep-find-ignored-directories "vendor")
+  (add-to-list 'grep-find-ignored-directories "coverage"))
 
 ;; tabs are evil
 (setq-default indent-tabs-mode nil
