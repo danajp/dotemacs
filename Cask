@@ -1,7 +1,7 @@
 (source gnu)
 (source marmalade)
 (source "elpa" "http://tromey.com/elpa/")
-(source melpa)
+(source melpa-stable)
 
 (depends-on "cask")
 (depends-on "coffee-mode")
