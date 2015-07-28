@@ -6,6 +6,7 @@
 
 (depends-on "coffee-mode")
 (depends-on "color-theme-sanityinc-solarized")
+(depends-on "solarized-theme")
 (depends-on "dash")
 (depends-on "epl")
 (depends-on "f")
