@@ -1,3 +1,4 @@
+;; -*- mode: emacs-lisp -*-
 (source gnu)
 (source marmalade)
 (source "elpa" "http://tromey.com/elpa/")
@@ -12,7 +13,6 @@
 (depends-on "magit")
 (depends-on "markdown-mode")
 (depends-on "org")
-(depends-on "org-present")
 (depends-on "php-mode")
 (depends-on "s")
 (depends-on "shut-up")
