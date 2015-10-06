@@ -289,6 +289,9 @@ use to determine if the package is installed/loaded."
 	'(("default"
 	   ("erc" (mode . erc-mode))
 	   ("org" (mode . org-mode))
+       ("magit status" (mode . magit-status-mode))
+       ("magit process" (mode . magit-process-mode))
+       ("magit other" (name . "^\\*magit-"))
 	   ("emacs" (or (name . "^\\*scratch\\*$")
 			(name . "^\\*Messages\\*$")
 			(name . "^\\*Apropos\\*$")
