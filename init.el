@@ -271,6 +271,9 @@ use to determine if the package is installed/loaded."
 
 ;; -- configure builtin packages -------------------------------------
 
+;; shell-script-mode
+(setq sh-basic-offset 2)
+
 ;; uniquify
 (after 'uniquify
   (setq uniquify-buffer-name-style 'post-forward
