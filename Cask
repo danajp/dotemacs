@@ -31,3 +31,4 @@
 (depends-on "rubocop")
 (depends-on "inf-ruby")
 (depends-on "editorconfig")
+(depends-on "dockerfile-mode")
