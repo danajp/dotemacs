@@ -481,6 +481,11 @@ use to determine if the package is installed/loaded."
 (global-set-key (kbd "C-c d o c") 'org-capture)
 (global-set-key (kbd "C-c d o l") 'org-store-link)
 
+;; --- solarized theme -----------------------------------------------
+(setq solarized-scale-org-headlines nil
+      solarized-use-less-bold t
+      solarized-use-variable-pitch nil)
+
 ;; load additional local configuration if it exists
 (when (file-exists-p "~/.emacs.d/local.el")
   (load-file "~/.emacs.d/local.el"))
