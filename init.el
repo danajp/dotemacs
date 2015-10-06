@@ -178,6 +178,7 @@ use to determine if the package is installed/loaded."
 
 ;; magit
 (after 'magit-autoloads
+  (setq magit-push-always-verify nil)
   (global-set-key (kbd "C-x g s") 'magit-status))
 
 ;; yaml
