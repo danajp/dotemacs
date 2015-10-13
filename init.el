@@ -256,7 +256,8 @@ use to determine if the package is installed/loaded."
   (global-rbenv-mode))
 
 (after 'rspec-mode-autoloads
-  (require 'rspec-mode))
+  (require 'rspec-mode)
+  (add-hook 'after-init-hook 'inf-ruby-switch-setup))
 
 ;; --- configure non-elpa packages -----------------------------------
 (add-to-list 'load-path "~/.emacs.d/lib")
