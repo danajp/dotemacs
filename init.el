@@ -244,7 +244,7 @@ use to determine if the package is installed/loaded."
 
 (after 'ace-window-autoloads
   (setq aw-keys '(?a ?s ?d ?f ?j ?k ?l))
-  (global-set-key (kbd "C-c d b") 'ace-window))
+  (global-set-key (kbd "C-x o") 'ace-window))
 
 (after 'ruby-mode
   (setq ruby-align-to-stmt-keywords t))
