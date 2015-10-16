@@ -273,7 +273,8 @@ use to determine if the package is installed/loaded."
 ;; -- configure builtin packages -------------------------------------
 
 ;; shell-script-mode
-(setq sh-basic-offset 2)
+(setq sh-basic-offset 2
+      sh-indentation 2)
 
 ;; uniquify
 (after 'uniquify
