@@ -257,6 +257,7 @@ use to determine if the package is installed/loaded."
 
 (after 'rspec-mode-autoloads
   (require 'rspec-mode)
+  (setq rspec-use-rake-when-possible nil)
   (add-hook 'after-init-hook 'inf-ruby-switch-setup))
 
 ;; --- configure non-elpa packages -----------------------------------
