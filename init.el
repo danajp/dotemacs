@@ -174,7 +174,12 @@ use to determine if the package is installed/loaded."
   (add-hook 'org-clock-in-hook 'org-save-all-org-buffers)
   (add-hook 'org-clock-out-hook 'org-save-all-org-buffers)
   (setq org-agenda-clockreport-parameter-plist
-        '(:link t :maxlevel 3 :step day :stepskip0 t :fileskip0 t)))
+        '(:link t :maxlevel 3 :step day :stepskip0 t :fileskip0 t))
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (ditaa-docker . t))))
 
 ;; magit
 (after 'magit-autoloads
