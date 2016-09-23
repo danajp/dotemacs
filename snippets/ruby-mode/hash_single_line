@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: hash single line
+# key: hs
+# --
+{ $0 }

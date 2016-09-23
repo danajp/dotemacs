@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: hash multiline
+# key: hm
+# --
+{
+    $0
+}
