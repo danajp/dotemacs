@@ -265,6 +265,10 @@ use to determine if the package is installed/loaded."
   (setq rspec-use-rake-when-possible nil)
   (add-hook 'after-init-hook 'inf-ruby-switch-setup))
 
+(after 'yasnippet-autoloads
+  (require 'yasnippet)
+  (yas-global-mode 1))
+
 ;; --- configure non-elpa packages -----------------------------------
 (add-to-list 'load-path "~/.emacs.d/lib")
 
