@@ -263,7 +263,8 @@ use to determine if the package is installed/loaded."
 (after 'rspec-mode-autoloads
   (require 'rspec-mode)
   (setq rspec-use-rake-when-possible nil)
-  (add-hook 'after-init-hook 'inf-ruby-switch-setup))
+  (add-hook 'after-init-hook 'inf-ruby-switch-setup)
+  (rspec-install-snippets))
 
 (after 'yasnippet-autoloads
   (require 'yasnippet)
