@@ -32,3 +32,4 @@
 (depends-on "inf-ruby")
 (depends-on "editorconfig")
 (depends-on "dockerfile-mode")
+(depends-on "yasnippet")
