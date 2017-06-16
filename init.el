@@ -141,7 +141,7 @@ use to determine if the package is installed/loaded."
 	org-clock-out-remove-zero-time-clocks t)
   (setq org-agenda-files '("~/org/refile.org"
                            "~/org/diary.org"
-                           "~/org/xls"))
+                           "~/org/notes.org"))
   (setq org-refile-targets '((nil :maxlevel . 2)
                              (org-agenda-files :maxlevel . 2)))
   (setq org-refile-use-outline-path 'file
@@ -151,12 +151,10 @@ use to determine if the package is installed/loaded."
   ;; capture templates
   (setq org-capture-templates `(("t" "todo" entry (file ,org-default-notes-file)
                                  "* TODO %?\n  %U\n  %a\n   %i" :clock-in t :clock-resume t)
-                                ("m" "meeting" entry (file ,org-default-notes-file)
-                                 "* MEETING %? :MEETING:\n%U" :clock-in t :clock-resume t)
-                                ("i" "interuption" entry (file ,org-default-notes-file)
-                                 "* INTERUPTION with %? :INTERUPTION:\n%U" :clock-in t :clock-resume t)
+                                ("n" "note" entry (file ,org-default-notes-file)
+                                 "* %? :note:\n  %U\n  %a\n  %i" :clock-in t :clock-resume t)
                                 ("j" "journal" entry (file+datetree "~/org/diary.org")
-                                 "* %?\n%U\n" :clock-in t :clock-resume t)))
+                                 "* %?\n  %U\n" :clock-in t :clock-resume t)))
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
