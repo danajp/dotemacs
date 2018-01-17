@@ -1,3 +1,5 @@
+(package-initialize)
+
 (defmacro after (mode &rest body)
   "`eval-after-load' MODE evaluate BODY.
 
@@ -401,6 +403,9 @@ use to determine if the package is installed/loaded."
  '(custom-safe-themes
    (quote
     ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
+ '(package-selected-packages
+   (quote
+    (go-mode yasnippet yaml-mode web-mode solarized-theme smartparens shut-up scss-mode rubocop rspec-mode robe rbenv projectile-rails php-mode markdown-mode magit ido-ubiquitous editorconfig dockerfile-mode color-theme-sanityinc-solarized coffee-mode ace-window)))
  '(safe-local-variable-values (quote ((org-enable-table-editor) (c-indent-level . 8)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
