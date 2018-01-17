@@ -31,3 +31,4 @@
 (depends-on "editorconfig")
 (depends-on "dockerfile-mode")
 (depends-on "yasnippet")
+(depends-on "go-mode")
