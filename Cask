@@ -12,6 +12,8 @@
 (depends-on "epl")
 (depends-on "f")
 (depends-on "go-mode")
+(depends-on "helm")
+(depends-on "helm-projectile")
 (depends-on "ido-ubiquitous")
 (depends-on "inf-ruby")
 (depends-on "magit")
