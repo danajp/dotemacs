@@ -118,8 +118,28 @@ use to determine if the package is installed/loaded."
 (after 'ido-ubiquitous-autoloads
   (setq ido-enable-flex-matching t
         ido-auto-merge-work-directories-length -1)
-  (ido-mode 1)
-  (ido-ubiquitous-mode 1))
+  (ido-mode 0)
+  (ido-ubiquitous-mode 0))
+
+(after 'helm-autoloads
+  (require 'helm-config)
+  (helm-dabbrev)
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  (global-set-key (kbd "C-x b") 'helm-mini)
+  (helm-mode 1))
+
+(after 'helm-projectile-autoloads
+  (require 'helm-projectile)
+  (helm-projectile-on))
+
+(after 'projectile-autoloads
+  (projectile-global-mode)
+  (add-to-list 'projectile-globally-ignored-directories "log")
+  (add-to-list 'projectile-globally-ignored-directories "tmp"))
+
+(after 'projectile-rails-autoloads
+  (add-hook 'projectile-mode-hook 'projectile-rails-on))
 
 (after 'smartparens-autoloads
   (smartparens-global-mode)
@@ -229,14 +249,6 @@ use to determine if the package is installed/loaded."
 (after 'auto-complete-autoloads
   (require 'auto-complete-config)
   (ac-config-default))
-
-(after 'projectile-autoloads
-  (projectile-global-mode)
-  (add-to-list 'projectile-globally-ignored-directories "log")
-  (add-to-list 'projectile-globally-ignored-directories "tmp"))
-
-(after 'projectile-rails-autoloads
-  (add-hook 'projectile-mode-hook 'projectile-rails-on))
 
 (after 'haskell-mode-autoloads
   (add-hook 'haskell-mode-hook 'haskell-simple-indent-mode))
@@ -405,7 +417,7 @@ use to determine if the package is installed/loaded."
     ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
  '(package-selected-packages
    (quote
-    (go-mode yasnippet yaml-mode web-mode solarized-theme smartparens shut-up scss-mode rubocop rspec-mode robe rbenv projectile-rails php-mode markdown-mode magit ido-ubiquitous editorconfig dockerfile-mode color-theme-sanityinc-solarized coffee-mode ace-window)))
+    (helm-projectile helm go-mode yasnippet yaml-mode web-mode solarized-theme smartparens shut-up scss-mode rubocop rspec-mode robe rbenv projectile-rails php-mode markdown-mode magit ido-ubiquitous editorconfig dockerfile-mode color-theme-sanityinc-solarized coffee-mode ace-window)))
  '(safe-local-variable-values (quote ((org-enable-table-editor) (c-indent-level . 8)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
