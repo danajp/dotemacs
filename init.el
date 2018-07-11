@@ -137,7 +137,8 @@ use to determine if the package is installed/loaded."
 (after 'projectile-autoloads
   (projectile-global-mode)
   (add-to-list 'projectile-globally-ignored-directories "log")
-  (add-to-list 'projectile-globally-ignored-directories "tmp"))
+  (add-to-list 'projectile-globally-ignored-directories "tmp")
+  (add-to-list 'projectile-globally-ignored-directories "vendor"))
 
 (after 'projectile-rails-autoloads
   (add-hook 'projectile-mode-hook 'projectile-rails-on))
