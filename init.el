@@ -136,6 +136,7 @@ use to determine if the package is installed/loaded."
 
 (after 'projectile-autoloads
   (projectile-global-mode)
+  (setq projectile-switch-project-action 'projectile-vc)
   (add-to-list 'projectile-globally-ignored-directories "log")
   (add-to-list 'projectile-globally-ignored-directories "tmp")
   (add-to-list 'projectile-globally-ignored-directories "vendor"))
