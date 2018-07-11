@@ -203,7 +203,9 @@ use to determine if the package is installed/loaded."
 
 ;; magit
 (after 'magit-autoloads
-  (setq magit-push-always-verify nil)
+  (setq magit-push-always-verify nil
+        magit-repository-directories '(("~/src" . 1)
+                                       ("~/src/go/src/" . 3)))
   (global-set-key (kbd "C-x g s") 'magit-status))
 
 ;; yaml
