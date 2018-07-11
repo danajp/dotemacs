@@ -121,9 +121,10 @@ use to determine if the package is installed/loaded."
   (ido-mode 0)
   (ido-ubiquitous-mode 0))
 
-(after 'helm-autoloads
+(after 'helm
   (require 'helm-config)
-  (helm-dabbrev)
+  (setq helm-mode-fuzzy-match t
+        helm-grep-file-path-style 'relative)
   (global-set-key (kbd "M-x") 'helm-M-x)
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
   (global-set-key (kbd "C-x b") 'helm-mini)
