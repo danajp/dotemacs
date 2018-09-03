@@ -220,34 +220,31 @@ use to determine if the package is installed/loaded."
                                        ("~/src/go/src/" . 3)))
   :bind ("C-x g s" . magit-status))
 
-;; yaml
-(after 'yaml-mode-autoloads
-  (autoload 'yaml-mode "yaml-mode")
-  (add-to-list 'auto-mode-alist '("\\.ya?ml" . yaml-mode)))
+(use-package yaml-mode
+  :mode "\\.ya?ml")
 
-;; php
-(after 'php-mode-autoloads
+(use-package php-mode
+  :mode "\\.inc"
+  :config
   (add-hook 'php-mode-hook '(lambda ()
                               (php-enable-psr2-coding-style)
                               ;; psr2 turns this off, turn it back on
-                              (setq show-trailing-whitespace t)))
-  (add-to-list 'auto-mode-alist '("\\.inc" . php-mode)))
+                              (setq show-trailing-whitespace t))))
 
-;; markdown
-(after 'markdown-mode-autoloads
-  (add-to-list 'auto-mode-alist '("\\.md" . markdown-mode)))
+(use-package markdown-mode
+  :mode "\\.md")
 
-;; web-mode
-(after 'web-mode-autoloads
-  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.html?\\.erb\\'" . web-mode))
+(use-package web-mode
+  :mode (("\\.html?\\'" . web-mode)
+         ("\\.html?\\.erb\\'" . web-mode))
+  :config
   (setq web-mode-markup-indent-offset 2
         web-mode-code-indent-offset 2)
-  (after 'web-mode-autoloads
-    (sp-local-pair 'web-mode "<" ">" :actions nil)))
+  (sp-local-pair 'web-mode "<" ">" :actions nil))
 
-;; zencoding-mode
-(after 'zencoding-mode-autoloads
+(use-package zencoding-mode
+  :after (web-mode)
+  :config
   (add-hook 'web-mode-hook 'zencoding-mode)
   (setq zencoding-indentation 2))
 
@@ -277,23 +274,25 @@ use to determine if the package is installed/loaded."
   (setq aw-keys '(?a ?s ?d ?f ?j ?k ?l))
   (global-set-key (kbd "C-x o") 'ace-window))
 
-(after 'ruby-mode
+(use-package ruby-mode
+  :config
   (setq ruby-align-to-stmt-keywords t))
 
-(if (file-directory-p "/usr/local/bin/rbenv")
-    (setq rbenv-installation-directory "/usr/local/bin/rbenv"))
-(after 'rbenv-autoloads
-  (require 'rbenv)
+(use-package rbenv
+  :init
+  (if (file-directory-p "/usr/local/bin/rbenv")
+      (setq rbenv-installation-directory "/usr/local/bin/rbenv"))
+  :config
   (global-rbenv-mode))
 
-(after 'rspec-mode-autoloads
-  (require 'rspec-mode)
+(use-package rspec-mode
+  :config
   (setq rspec-use-rake-when-possible nil)
   (add-hook 'after-init-hook 'inf-ruby-switch-setup)
   (rspec-install-snippets))
 
-(after 'yasnippet-autoloads
-  (require 'yasnippet)
+(use-package yasnippet
+  :config
   (yas-global-mode 1))
 
 ;; --- configure non-elpa packages -----------------------------------
