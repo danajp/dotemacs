@@ -211,11 +211,9 @@ use to determine if the package is installed/loaded."
   (setq org-agenda-clockreport-parameter-plist
         '(:link t :maxlevel 3 :step day :stepskip0 t :fileskip0 t))
 
-  ;; not working with use-package, maybe a problem with ditaa-docker?
-  ;;(org-babel-do-load-languages
-  ;; 'org-babel-load-languages
-  ;; '((emacs-lisp . t)
-  ;;   (ditaa-docker . t)))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)))
   :bind (("C-c d o i" . org-clock-in)
          ("C-c d o o" . org-clock-out)
          ("C-c d o j" . org-clock-jump-to-current-clock)
@@ -318,6 +316,12 @@ use to determine if the package is installed/loaded."
   :mode ("\\.pk[bs]" . plsql-mode)
   :config
   (setq plsql-indent 4))
+
+(use-package ob-ditaa-docker
+  :load-path "lib/"
+  :after (org)
+  :config
+  (add-to-list 'org-babel-load-languages '(ditaa-docker . t)))
 
 ;; -- configure builtin packages -------------------------------------
 
