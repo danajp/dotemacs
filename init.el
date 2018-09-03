@@ -269,7 +269,8 @@ use to determine if the package is installed/loaded."
                                           (org-present-small)
                                           (org-remove-inline-images))))
 
-(after 'auto-complete-autoloads
+(use-package auto-complete
+  :config
   (require 'auto-complete-config)
   (ac-config-default))
 
@@ -282,9 +283,10 @@ use to determine if the package is installed/loaded."
 (after 'scss-mode
   (setq css-indent-offset 2))
 
-(after 'ace-window-autoloads
+(use-package ace-window
+  :config
   (setq aw-keys '(?a ?s ?d ?f ?j ?k ?l))
-  (global-set-key (kbd "C-x o") 'ace-window))
+  :bind ("C-x o" . ace-window))
 
 (use-package ruby-mode
   :config
