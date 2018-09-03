@@ -118,12 +118,13 @@ use to determine if the package is installed/loaded."
   (add-to-list 'grep-find-ignored-directories "coverage")
   :bind ("C-c c e" . rgrep))
 
-;; ido
-(after 'ido-ubiquitous-autoloads
-  (setq ido-enable-flex-matching t
-        ido-auto-merge-work-directories-length -1)
-  (ido-mode 0)
-  (ido-ubiquitous-mode 0))
+;; commented out to avoid warnings when loaded
+;; (use-package ido-ubiquitous
+;;   :config
+;;   (setq ido-enable-flex-matching t
+;;         ido-auto-merge-work-directories-length -1)
+;;   (ido-mode 0)
+;;   (ido-ubiquitous-mode 0))
 
 (use-package helm
   :config
