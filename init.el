@@ -161,7 +161,8 @@ use to determine if the package is installed/loaded."
   (require 'smartparens-config))
 
 ;; org
-(after 'org
+(use-package org
+  :config
   (add-hook 'org-mode-hook 'turn-on-font-lock)
   (org-clock-persistence-insinuate)
   (setq org-log-done 'time ;; log the time when finishing a todo task
@@ -210,10 +211,18 @@ use to determine if the package is installed/loaded."
   (setq org-agenda-clockreport-parameter-plist
         '(:link t :maxlevel 3 :step day :stepskip0 t :fileskip0 t))
 
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((emacs-lisp . t)
-     (ditaa-docker . t))))
+  ;; not working with use-package, maybe a problem with ditaa-docker?
+  ;;(org-babel-do-load-languages
+  ;; 'org-babel-load-languages
+  ;; '((emacs-lisp . t)
+  ;;   (ditaa-docker . t)))
+  :bind (("C-c d o i" . org-clock-in)
+         ("C-c d o o" . org-clock-out)
+         ("C-c d o j" . org-clock-jump-to-current-clock)
+         ("C-c d o b" . org-iswitchb)
+         ("C-c d o a" . org-agenda)
+         ("C-c d o c" . org-capture)
+         ("C-c d o l" . org-store-link)))
 
 (use-package magit
   :config
@@ -250,7 +259,9 @@ use to determine if the package is installed/loaded."
   (setq zencoding-indentation 2))
 
 ;; org-present
-(after 'org-present-autoloads
+(use-package org-present
+  :after (org)
+  :config
   (add-hook 'org-present-mode-hook (lambda ()
                                      (org-present-big)
                                      (org-display-inline-images)))
@@ -399,14 +410,6 @@ use to determine if the package is installed/loaded."
 (global-set-key (kbd "C-c d R") 'revert-buffer)
 (global-set-key (kbd "C-x r u") 'my-upcase-rectangle)
 
-;; org-mode
-(global-set-key (kbd "C-c d o i") 'org-clock-in)
-(global-set-key (kbd "C-c d o o") 'org-clock-out)
-(global-set-key (kbd "C-c d o j") 'org-clock-jump-to-current-clock)
-(global-set-key (kbd "C-c d o b") 'org-iswitchb)
-(global-set-key (kbd "C-c d o a") 'org-agenda)
-(global-set-key (kbd "C-c d o c") 'org-capture)
-(global-set-key (kbd "C-c d o l") 'org-store-link)
 
 ;; --- solarized theme -----------------------------------------------
 (setq solarized-scale-org-headlines nil
