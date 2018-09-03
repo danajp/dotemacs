@@ -329,17 +329,16 @@ use to determine if the package is installed/loaded."
 (setq sh-basic-offset 2
       sh-indentation 2)
 
-;; uniquify
-(after 'uniquify
+(use-package uniquify
+  :config
   (setq uniquify-buffer-name-style 'post-forward
 	uniquify-separator ":"
 	uniquify-after-kill-buffer-p t
 	uniquify-ignore-buffers-re "^\\*"))
 
-(require 'uniquify)
-
-;; ibuffer
-(after 'ibuffer
+(use-package ibuffer
+  :bind ("C-x C-b" . ibuffer)
+  :config
   (setq ibuffer-saved-filter-groups
 	'(("default"
 	   ("erc" (mode . erc-mode))
@@ -356,10 +355,8 @@ use to determine if the package is installed/loaded."
   (add-hook 'ibuffer-mode-hook (lambda ()
 				 (ibuffer-switch-to-saved-filter-groups "default"))))
 
-(require 'ibuffer)
-
-;; erc
-(after 'erc
+(use-package erc
+  :config
   (setq erc-log-insert-log-on-open t
         erc-log-channels-directory "~/.erc/logs/"
         erc-fill-prefix "      "
@@ -395,17 +392,14 @@ use to determine if the package is installed/loaded."
         erc-track-shorten-cutoff 10)
   (erc-spelling-mode 1))
 
-(require 'erc)
-
-;; tramp
-(after 'tramp
+(use-package tramp
+  :config
   (setq tramp-default-method "ssh"))
 
 ;; command == meta on mac
 (setq mac-command-modifier 'meta)
 
 ;; global key bindings
-(global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-c d g") 'goto-line)
 (global-set-key (kbd "C-c d r") 'replace-regexp)
 (global-set-key (kbd "C-c d a") 'align-regexp)
