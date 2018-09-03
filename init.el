@@ -153,7 +153,8 @@ use to determine if the package is installed/loaded."
   :config
   (add-hook 'projectile-mode-hook 'projectile-rails-on))
 
-(after 'smartparens-autoloads
+(use-package smartparens
+  :config
   (smartparens-global-mode)
   (show-smartparens-global-mode)
   (require 'smartparens-config))
