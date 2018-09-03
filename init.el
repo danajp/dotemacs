@@ -214,12 +214,11 @@ use to determine if the package is installed/loaded."
    '((emacs-lisp . t)
      (ditaa-docker . t))))
 
-;; magit
-(after 'magit-autoloads
-  (setq magit-push-always-verify nil
-        magit-repository-directories '(("~/src" . 1)
+(use-package magit
+  :config
+  (setq magit-repository-directories '(("~/src" . 1)
                                        ("~/src/go/src/" . 3)))
-  (global-set-key (kbd "C-x g s") 'magit-status))
+  :bind ("C-x g s" . magit-status))
 
 ;; yaml
 (after 'yaml-mode-autoloads
