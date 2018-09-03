@@ -3,6 +3,7 @@
 (source "elpa" "http://tromey.com/elpa/")
 (source melpa-stable)
 
+(depends-on "use-package")
 (depends-on "ace-window")
 (depends-on "coffee-mode")
 (depends-on "color-theme-sanityinc-solarized")

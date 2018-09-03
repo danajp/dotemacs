@@ -1,4 +1,11 @@
-(package-initialize)
+(eval-when-compile
+  (package-initialize)
+  ;; --- cask setup --------------------------------------------------
+  (require 'cask (if (file-exists-p (expand-file-name "~/.cask/cask.el"))
+                   (expand-file-name "~/.cask/cask")
+                 "/usr/local/share/emacs/site-lisp/cask"))
+  (cask-initialize)
+  (require 'use-package))
 
 (defmacro after (mode &rest body)
   "`eval-after-load' MODE evaluate BODY.
@@ -106,12 +113,6 @@ use to determine if the package is installed/loaded."
   "Run a search on DuckDuckGo"
   (interactive "ssearch duckduckgo: ")
   (browse-url (concat "https://duckduckgo.com/?q=" (url-hexify-string q))))
-
-;; --- cask setup ----------------------------------------------------
-(require 'cask (if (file-exists-p (expand-file-name "~/.cask/cask.el"))
-                   (expand-file-name "~/.cask/cask")
-                 "/usr/local/share/emacs/site-lisp/cask"))
-(cask-initialize)
 
 ;; --- configure elpa packages ---------------------------------------
 ;; ido
