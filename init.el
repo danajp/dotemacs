@@ -36,14 +36,7 @@ use to determine if the package is installed/loaded."
 
 (setq font-lock-maximum-decoration t
       transient-mark-mode t
-      next-line-add-newlines nil
-      grep-command "grep -rni")
-
-(after 'grep
-  (add-to-list 'grep-find-ignored-directories "log")
-  (add-to-list 'grep-find-ignored-directories "tmp")
-  (add-to-list 'grep-find-ignored-directories "vendor")
-  (add-to-list 'grep-find-ignored-directories "coverage"))
+      next-line-add-newlines nil)
 
 ;; tabs are evil
 (setq-default indent-tabs-mode nil
@@ -115,6 +108,16 @@ use to determine if the package is installed/loaded."
   (browse-url (concat "https://duckduckgo.com/?q=" (url-hexify-string q))))
 
 ;; --- configure elpa packages ---------------------------------------
+(use-package grep
+  :init
+  (setq grep-command "grep -rni")
+  :config
+  (add-to-list 'grep-find-ignored-directories "log")
+  (add-to-list 'grep-find-ignored-directories "tmp")
+  (add-to-list 'grep-find-ignored-directories "vendor")
+  (add-to-list 'grep-find-ignored-directories "coverage")
+  :bind ("C-c c e" . rgrep))
+
 ;; ido
 (after 'ido-ubiquitous-autoloads
   (setq ido-enable-flex-matching t
@@ -387,7 +390,6 @@ use to determine if the package is installed/loaded."
 (global-set-key (kbd "C-c d a") 'align-regexp)
 (global-set-key (kbd "C-c d t") 'delete-trailing-whitespace)
 (global-set-key (kbd "C-c d w") 'backward-kill-word)
-(global-set-key (kbd "C-c d e") 'rgrep)
 (global-set-key (kbd "C-c d s") 'my-ddg-search)
 (global-set-key (kbd "C-c d R") 'revert-buffer)
 (global-set-key (kbd "C-x r u") 'my-upcase-rectangle)
