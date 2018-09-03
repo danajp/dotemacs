@@ -125,27 +125,32 @@ use to determine if the package is installed/loaded."
   (ido-mode 0)
   (ido-ubiquitous-mode 0))
 
-(after 'helm
+(use-package helm
+  :config
   (require 'helm-config)
   (setq helm-mode-fuzzy-match t
         helm-grep-file-path-style 'relative)
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x C-f") 'helm-find-files)
-  (global-set-key (kbd "C-x b") 'helm-mini)
-  (helm-mode 1))
+  (helm-mode 1)
+  :bind (("M-x" . helm-M-x)
+         ("C-x C-f" . helm-find-files)
+         ("C-x b" . helm-mini)))
 
-(after 'helm-projectile-autoloads
-  (require 'helm-projectile)
+(use-package helm-projectile
+  :after (helm projectile)
+  :config
   (helm-projectile-on))
 
-(after 'projectile-autoloads
+(use-package projectile
+  :config
   (projectile-global-mode)
   (setq projectile-switch-project-action 'projectile-vc)
   (add-to-list 'projectile-globally-ignored-directories "log")
   (add-to-list 'projectile-globally-ignored-directories "tmp")
   (add-to-list 'projectile-globally-ignored-directories "vendor"))
 
-(after 'projectile-rails-autoloads
+(use-package projectile-rails
+  :after (projectile)
+  :config
   (add-hook 'projectile-mode-hook 'projectile-rails-on))
 
 (after 'smartparens-autoloads
