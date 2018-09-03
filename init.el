@@ -313,15 +313,11 @@ use to determine if the package is installed/loaded."
   (yas-global-mode 1))
 
 ;; --- configure non-elpa packages -----------------------------------
-(add-to-list 'load-path "~/.emacs.d/lib")
-
-;; pl/sql
-(after 'plsql
-  (setq plsql-indent 4)
-  (add-to-list 'auto-mode-alist '("\\.pk[bs]" . plsql-mode)))
-
-(autoload 'plsql "plsql")
-(require 'plsql)
+(use-package plsql
+  :load-path "lib/"
+  :mode ("\\.pk[bs]" . plsql-mode)
+  :config
+  (setq plsql-indent 4))
 
 ;; -- configure builtin packages -------------------------------------
 
