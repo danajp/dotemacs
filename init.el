@@ -274,13 +274,16 @@ use to determine if the package is installed/loaded."
   (require 'auto-complete-config)
   (ac-config-default))
 
-(after 'haskell-mode-autoloads
+(use-package haskell-mode
+  :config
   (add-hook 'haskell-mode-hook 'haskell-simple-indent-mode))
 
-(after 'js
+(use-package js
+  :config
   (setq js-indent-level 2))
 
-(after 'scss-mode
+(use-package scss-mode
+  :config
   (setq css-indent-offset 2))
 
 (use-package ace-window
