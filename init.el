@@ -104,7 +104,7 @@
   (add-to-list 'grep-find-ignored-directories "tmp")
   (add-to-list 'grep-find-ignored-directories "vendor")
   (add-to-list 'grep-find-ignored-directories "coverage")
-  :bind ("C-c c e" . rgrep))
+  :bind ("C-c d e" . rgrep))
 
 ;; commented out to avoid warnings when loaded
 ;; (use-package ido-ubiquitous
