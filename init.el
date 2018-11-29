@@ -1,16 +1,11 @@
-(package-initialize)
-
-(defmacro after (mode &rest body)
-  "`eval-after-load' MODE evaluate BODY.
-
-This allows us to define configuration for features that aren't
-always installed and only eval that configuration after the feature is loaded.
-
-ELPA packages usually provide an -autoloads feature which we can
-use to determine if the package is installed/loaded."
-  (declare (indent defun))
-  `(eval-after-load (symbol-name ,mode)
-     '(progn ,@body)))
+(eval-when-compile
+  (package-initialize)
+  ;; --- cask setup --------------------------------------------------
+  (require 'cask (if (file-exists-p (expand-file-name "~/.cask/cask.el"))
+                   (expand-file-name "~/.cask/cask")
+                 "/usr/local/share/emacs/site-lisp/cask"))
+  (cask-initialize)
+  (require 'use-package))
 
 ;; --- general config ------------------------------------------------
 ;; no menus, buttons, scrollbars or startup screen
@@ -29,14 +24,7 @@ use to determine if the package is installed/loaded."
 
 (setq font-lock-maximum-decoration t
       transient-mark-mode t
-      next-line-add-newlines nil
-      grep-command "grep -rni")
-
-(after 'grep
-  (add-to-list 'grep-find-ignored-directories "log")
-  (add-to-list 'grep-find-ignored-directories "tmp")
-  (add-to-list 'grep-find-ignored-directories "vendor")
-  (add-to-list 'grep-find-ignored-directories "coverage"))
+      next-line-add-newlines nil)
 
 ;; tabs are evil
 (setq-default indent-tabs-mode nil
@@ -107,50 +95,62 @@ use to determine if the package is installed/loaded."
   (interactive "ssearch duckduckgo: ")
   (browse-url (concat "https://duckduckgo.com/?q=" (url-hexify-string q))))
 
-;; --- cask setup ----------------------------------------------------
-(require 'cask (if (file-exists-p (expand-file-name "~/.cask/cask.el"))
-                   (expand-file-name "~/.cask/cask")
-                 "/usr/local/share/emacs/site-lisp/cask"))
-(cask-initialize)
-
 ;; --- configure elpa packages ---------------------------------------
-;; ido
-(after 'ido-ubiquitous-autoloads
-  (setq ido-enable-flex-matching t
-        ido-auto-merge-work-directories-length -1)
-  (ido-mode 0)
-  (ido-ubiquitous-mode 0))
+(use-package grep
+  :init
+  (setq grep-command "grep -rni")
+  :config
+  (add-to-list 'grep-find-ignored-directories "log")
+  (add-to-list 'grep-find-ignored-directories "tmp")
+  (add-to-list 'grep-find-ignored-directories "vendor")
+  (add-to-list 'grep-find-ignored-directories "coverage")
+  :bind ("C-c d e" . rgrep))
 
-(after 'helm
+;; commented out to avoid warnings when loaded
+;; (use-package ido-ubiquitous
+;;   :config
+;;   (setq ido-enable-flex-matching t
+;;         ido-auto-merge-work-directories-length -1)
+;;   (ido-mode 0)
+;;   (ido-ubiquitous-mode 0))
+
+(use-package helm
+  :config
   (require 'helm-config)
   (setq helm-mode-fuzzy-match t
         helm-grep-file-path-style 'relative)
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x C-f") 'helm-find-files)
-  (global-set-key (kbd "C-x b") 'helm-mini)
-  (helm-mode 1))
+  (helm-mode 1)
+  :bind (("M-x" . helm-M-x)
+         ("C-x C-f" . helm-find-files)
+         ("C-x b" . helm-mini)))
 
-(after 'helm-projectile-autoloads
-  (require 'helm-projectile)
+(use-package helm-projectile
+  :after (helm projectile)
+  :config
   (helm-projectile-on))
 
-(after 'projectile-autoloads
+(use-package projectile
+  :config
   (projectile-global-mode)
   (setq projectile-switch-project-action 'projectile-vc)
   (add-to-list 'projectile-globally-ignored-directories "log")
   (add-to-list 'projectile-globally-ignored-directories "tmp")
   (add-to-list 'projectile-globally-ignored-directories "vendor"))
 
-(after 'projectile-rails-autoloads
+(use-package projectile-rails
+  :after (projectile)
+  :config
   (add-hook 'projectile-mode-hook 'projectile-rails-on))
 
-(after 'smartparens-autoloads
+(use-package smartparens
+  :config
   (smartparens-global-mode)
   (show-smartparens-global-mode)
   (require 'smartparens-config))
 
 ;; org
-(after 'org
+(use-package org
+  :config
   (add-hook 'org-mode-hook 'turn-on-font-lock)
   (org-clock-persistence-insinuate)
   (setq org-log-done 'time ;; log the time when finishing a todo task
@@ -201,49 +201,53 @@ use to determine if the package is installed/loaded."
 
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((emacs-lisp . t)
-     (ditaa-docker . t))))
+   '((emacs-lisp . t)))
+  :bind (("C-c d o i" . org-clock-in)
+         ("C-c d o o" . org-clock-out)
+         ("C-c d o j" . org-clock-jump-to-current-clock)
+         ("C-c d o b" . org-iswitchb)
+         ("C-c d o a" . org-agenda)
+         ("C-c d o c" . org-capture)
+         ("C-c d o l" . org-store-link)))
 
-;; magit
-(after 'magit-autoloads
-  (setq magit-push-always-verify nil
-        magit-repository-directories '(("~/src" . 1)
+(use-package magit
+  :config
+  (setq magit-repository-directories '(("~/src" . 1)
                                        ("~/src/go/src/" . 3)))
-  (global-set-key (kbd "C-x g s") 'magit-status))
+  :bind ("C-x g s" . magit-status))
 
-;; yaml
-(after 'yaml-mode-autoloads
-  (autoload 'yaml-mode "yaml-mode")
-  (add-to-list 'auto-mode-alist '("\\.ya?ml" . yaml-mode)))
+(use-package yaml-mode
+  :mode "\\.ya?ml")
 
-;; php
-(after 'php-mode-autoloads
+(use-package php-mode
+  :mode "\\.inc"
+  :config
   (add-hook 'php-mode-hook '(lambda ()
                               (php-enable-psr2-coding-style)
                               ;; psr2 turns this off, turn it back on
-                              (setq show-trailing-whitespace t)))
-  (add-to-list 'auto-mode-alist '("\\.inc" . php-mode)))
+                              (setq show-trailing-whitespace t))))
 
-;; markdown
-(after 'markdown-mode-autoloads
-  (add-to-list 'auto-mode-alist '("\\.md" . markdown-mode)))
+(use-package markdown-mode
+  :mode "\\.md")
 
-;; web-mode
-(after 'web-mode-autoloads
-  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.html?\\.erb\\'" . web-mode))
+(use-package web-mode
+  :mode (("\\.html?\\'" . web-mode)
+         ("\\.html?\\.erb\\'" . web-mode))
+  :config
   (setq web-mode-markup-indent-offset 2
         web-mode-code-indent-offset 2)
-  (after 'web-mode-autoloads
-    (sp-local-pair 'web-mode "<" ">" :actions nil)))
+  (sp-local-pair 'web-mode "<" ">" :actions nil))
 
-;; zencoding-mode
-(after 'zencoding-mode-autoloads
+(use-package zencoding-mode
+  :after (web-mode)
+  :config
   (add-hook 'web-mode-hook 'zencoding-mode)
   (setq zencoding-indentation 2))
 
 ;; org-present
-(after 'org-present-autoloads
+(use-package org-present
+  :after (org)
+  :config
   (add-hook 'org-present-mode-hook (lambda ()
                                      (org-present-big)
                                      (org-display-inline-images)))
@@ -251,52 +255,61 @@ use to determine if the package is installed/loaded."
                                           (org-present-small)
                                           (org-remove-inline-images))))
 
-(after 'auto-complete-autoloads
+(use-package auto-complete
+  :config
   (require 'auto-complete-config)
   (ac-config-default))
 
-(after 'haskell-mode-autoloads
+(use-package haskell-mode
+  :config
   (add-hook 'haskell-mode-hook 'haskell-simple-indent-mode))
 
-(after 'js
+(use-package js
+  :config
   (setq js-indent-level 2))
 
-(after 'scss-mode
+(use-package scss-mode
+  :config
   (setq css-indent-offset 2))
 
-(after 'ace-window-autoloads
+(use-package ace-window
+  :config
   (setq aw-keys '(?a ?s ?d ?f ?j ?k ?l))
-  (global-set-key (kbd "C-x o") 'ace-window))
+  :bind ("C-x o" . ace-window))
 
-(after 'ruby-mode
+(use-package ruby-mode
+  :config
   (setq ruby-align-to-stmt-keywords t))
 
-(if (file-directory-p "/usr/local/bin/rbenv")
-    (setq rbenv-installation-directory "/usr/local/bin/rbenv"))
-(after 'rbenv-autoloads
-  (require 'rbenv)
+(use-package rbenv
+  :init
+  (if (file-directory-p "/usr/local/bin/rbenv")
+      (setq rbenv-installation-directory "/usr/local/bin/rbenv"))
+  :config
   (global-rbenv-mode))
 
-(after 'rspec-mode-autoloads
-  (require 'rspec-mode)
+(use-package rspec-mode
+  :config
   (setq rspec-use-rake-when-possible nil)
   (add-hook 'after-init-hook 'inf-ruby-switch-setup)
   (rspec-install-snippets))
 
-(after 'yasnippet-autoloads
-  (require 'yasnippet)
+(use-package yasnippet
+  :config
   (yas-global-mode 1))
 
 ;; --- configure non-elpa packages -----------------------------------
-(add-to-list 'load-path "~/.emacs.d/lib")
+(use-package plsql
+  :load-path "lib/"
+  :mode ("\\.pk[bs]" . plsql-mode)
+  :config
+  (setq plsql-indent 4))
 
-;; pl/sql
-(after 'plsql
-  (setq plsql-indent 4)
-  (add-to-list 'auto-mode-alist '("\\.pk[bs]" . plsql-mode)))
-
-(autoload 'plsql "plsql")
-(require 'plsql)
+(use-package ob-ditaa-docker
+  :load-path "lib/"
+  :after (org)
+  :config
+  (add-to-list 'org-babel-load-languages '(ditaa-docker . t)))
 
 ;; -- configure builtin packages -------------------------------------
 
@@ -304,17 +317,16 @@ use to determine if the package is installed/loaded."
 (setq sh-basic-offset 2
       sh-indentation 2)
 
-;; uniquify
-(after 'uniquify
+(use-package uniquify
+  :config
   (setq uniquify-buffer-name-style 'post-forward
 	uniquify-separator ":"
 	uniquify-after-kill-buffer-p t
 	uniquify-ignore-buffers-re "^\\*"))
 
-(require 'uniquify)
-
-;; ibuffer
-(after 'ibuffer
+(use-package ibuffer
+  :bind ("C-x C-b" . ibuffer)
+  :config
   (setq ibuffer-saved-filter-groups
 	'(("default"
 	   ("erc" (mode . erc-mode))
@@ -331,10 +343,8 @@ use to determine if the package is installed/loaded."
   (add-hook 'ibuffer-mode-hook (lambda ()
 				 (ibuffer-switch-to-saved-filter-groups "default"))))
 
-(require 'ibuffer)
-
-;; erc
-(after 'erc
+(use-package erc
+  :config
   (setq erc-log-insert-log-on-open t
         erc-log-channels-directory "~/.erc/logs/"
         erc-fill-prefix "      "
@@ -370,35 +380,23 @@ use to determine if the package is installed/loaded."
         erc-track-shorten-cutoff 10)
   (erc-spelling-mode 1))
 
-(require 'erc)
-
-;; tramp
-(after 'tramp
+(use-package tramp
+  :config
   (setq tramp-default-method "ssh"))
 
 ;; command == meta on mac
 (setq mac-command-modifier 'meta)
 
 ;; global key bindings
-(global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-c d g") 'goto-line)
 (global-set-key (kbd "C-c d r") 'replace-regexp)
 (global-set-key (kbd "C-c d a") 'align-regexp)
 (global-set-key (kbd "C-c d t") 'delete-trailing-whitespace)
 (global-set-key (kbd "C-c d w") 'backward-kill-word)
-(global-set-key (kbd "C-c d e") 'rgrep)
 (global-set-key (kbd "C-c d s") 'my-ddg-search)
 (global-set-key (kbd "C-c d R") 'revert-buffer)
 (global-set-key (kbd "C-x r u") 'my-upcase-rectangle)
 
-;; org-mode
-(global-set-key (kbd "C-c d o i") 'org-clock-in)
-(global-set-key (kbd "C-c d o o") 'org-clock-out)
-(global-set-key (kbd "C-c d o j") 'org-clock-jump-to-current-clock)
-(global-set-key (kbd "C-c d o b") 'org-iswitchb)
-(global-set-key (kbd "C-c d o a") 'org-agenda)
-(global-set-key (kbd "C-c d o c") 'org-capture)
-(global-set-key (kbd "C-c d o l") 'org-store-link)
 
 ;; --- solarized theme -----------------------------------------------
 (setq solarized-scale-org-headlines nil
@@ -451,7 +449,7 @@ use to determine if the package is installed/loaded."
  '(magit-diff-use-overlays nil)
  '(package-selected-packages
    (quote
-    (groovy-mode helm-bundle-show ruby-tools helm-projectile helm go-mode yasnippet yaml-mode web-mode solarized-theme smartparens shut-up scss-mode rubocop rspec-mode robe rbenv projectile-rails php-mode markdown-mode magit ido-ubiquitous editorconfig dockerfile-mode color-theme-sanityinc-solarized coffee-mode ace-window)))
+    (use-package groovy-mode helm-bundle-show ruby-tools helm-projectile helm go-mode yasnippet yaml-mode web-mode solarized-theme smartparens shut-up scss-mode rubocop rspec-mode robe rbenv projectile-rails php-mode markdown-mode magit ido-ubiquitous editorconfig dockerfile-mode color-theme-sanityinc-solarized coffee-mode ace-window)))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
