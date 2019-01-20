@@ -60,13 +60,6 @@
 (add-to-list 'default-frame-alist '(mouse-wheel-mode . 1))
 (add-to-list 'default-frame-alist '(fringe-mode . 2))
 
-(if (daemonp)
-    (add-hook 'after-make-frame-functions
-              '(lambda (f)
-                 (with-selected-frame f
-                   (when (window-system f)
-                     (load-theme 'solarized-dark))))))
-
 ;; things I want in every file buffer
 (defun my-find-file-hook ()
   "Buffer local settings for buffers that are actually files."
@@ -307,6 +300,18 @@
   :config
   (yas-global-mode 1))
 
+(use-package color-theme-sanityinc-solarized
+  :config
+  (setq solarized-scale-org-headlines nil
+        solarized-use-less-bold t
+        solarized-use-variable-pitch nil)
+  (if (daemonp)
+      (add-hook 'after-make-frame-functions
+                '(lambda (f)
+                   (with-selected-frame f
+                     (when (window-system f)
+                       (load-theme 'sanityinc-solarized-dark)))))))
+
 ;; --- configure non-elpa packages -----------------------------------
 (use-package plsql
   :straight nil
@@ -408,12 +413,6 @@
 (global-set-key (kbd "C-c d s") 'my-ddg-search)
 (global-set-key (kbd "C-c d R") 'revert-buffer)
 (global-set-key (kbd "C-x r u") 'my-upcase-rectangle)
-
-
-;; --- solarized theme -----------------------------------------------
-(setq solarized-scale-org-headlines nil
-      solarized-use-less-bold t
-      solarized-use-variable-pitch nil)
 
 ;; load additional local configuration if it exists
 (when (file-exists-p "~/.emacs.d/local.el")
