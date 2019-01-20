@@ -1,11 +1,19 @@
-(eval-when-compile
-  (package-initialize)
-  ;; --- cask setup --------------------------------------------------
-  (require 'cask (if (file-exists-p (expand-file-name "~/.cask/cask.el"))
-                   (expand-file-name "~/.cask/cask")
-                 "/usr/local/share/emacs/site-lisp/cask"))
-  (cask-initialize)
-  (require 'use-package))
+;; --- straight boilerplate ------------------------------------------
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
 ;; --- general config ------------------------------------------------
 ;; no menus, buttons, scrollbars or startup screen
@@ -289,6 +297,7 @@
   (global-rbenv-mode))
 
 (use-package rspec-mode
+  :after (yasnippet)
   :config
   (setq rspec-use-rake-when-possible nil)
   (add-hook 'after-init-hook 'inf-ruby-switch-setup)
@@ -300,12 +309,14 @@
 
 ;; --- configure non-elpa packages -----------------------------------
 (use-package plsql
+  :straight nil
   :load-path "lib/"
   :mode ("\\.pk[bs]" . plsql-mode)
   :config
   (setq plsql-indent 4))
 
 (use-package ob-ditaa-docker
+  :straight nil
   :load-path "lib/"
   :after (org)
   :config
@@ -318,6 +329,7 @@
       sh-indentation 2)
 
 (use-package uniquify
+  :straight nil
   :config
   (setq uniquify-buffer-name-style 'post-forward
 	uniquify-separator ":"
