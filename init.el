@@ -13,7 +13,6 @@
   (load bootstrap-file nil 'nomessage))
 
 (straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
 
 ;; --- general config ------------------------------------------------
 ;; no menus, buttons, scrollbars or startup screen
@@ -97,16 +96,6 @@
   (browse-url (concat "https://duckduckgo.com/?q=" (url-hexify-string q))))
 
 ;; --- configure elpa packages ---------------------------------------
-(use-package grep
-  :init
-  (setq grep-command "grep -rni")
-  :config
-  (add-to-list 'grep-find-ignored-directories "log")
-  (add-to-list 'grep-find-ignored-directories "tmp")
-  (add-to-list 'grep-find-ignored-directories "vendor")
-  (add-to-list 'grep-find-ignored-directories "coverage")
-  :bind ("C-c d e" . rgrep))
-
 ;; commented out to avoid warnings when loaded
 ;; (use-package ido-ubiquitous
 ;;   :config
@@ -116,6 +105,7 @@
 ;;   (ido-ubiquitous-mode 0))
 
 (use-package helm
+  :straight t
   :config
   (require 'helm-config)
   (setq helm-mode-fuzzy-match t
@@ -126,11 +116,13 @@
          ("C-x b" . helm-mini)))
 
 (use-package helm-projectile
+  :straight t
   :after (helm projectile)
   :config
   (helm-projectile-on))
 
 (use-package projectile
+  :straight t
   :config
   (projectile-global-mode)
   (setq projectile-switch-project-action 'projectile-vc)
@@ -139,6 +131,7 @@
   (add-to-list 'projectile-globally-ignored-directories "vendor"))
 
 (use-package projectile-rails
+  :straight t
   :after (projectile)
   :config
   (add-hook 'projectile-mode-hook 'projectile-rails-on))
@@ -151,6 +144,7 @@
 
 ;; org
 (use-package org
+  :straight t
   :config
   (add-hook 'org-mode-hook 'turn-on-font-lock)
   (org-clock-persistence-insinuate)
@@ -212,12 +206,14 @@
          ("C-c d o l" . org-store-link)))
 
 (use-package magit
+  :straight t
   :config
   (setq magit-repository-directories '(("~/src" . 1)
                                        ("~/src/go/src/" . 3)))
   :bind ("C-x g s" . magit-status))
 
 (use-package yaml-mode
+  :straight t
   :mode "\\.ya?ml")
 
 (use-package php-mode
@@ -229,6 +225,7 @@
                               (setq show-trailing-whitespace t))))
 
 (use-package markdown-mode
+  :straight t
   :mode "\\.md")
 
 (use-package web-mode
@@ -274,15 +271,18 @@
   (setq css-indent-offset 2))
 
 (use-package ace-window
+  :straight t
   :config
   (setq aw-keys '(?a ?s ?d ?f ?j ?k ?l))
   :bind ("C-x o" . ace-window))
 
 (use-package ruby-mode
+  :straight t
   :config
   (setq ruby-align-to-stmt-keywords t))
 
 (use-package rbenv
+  :straight t
   :init
   (if (file-directory-p "/usr/local/bin/rbenv")
       (setq rbenv-installation-directory "/usr/local/bin/rbenv"))
@@ -290,6 +290,7 @@
   (global-rbenv-mode))
 
 (use-package rspec-mode
+  :straight t
   :after (yasnippet)
   :config
   (setq rspec-use-rake-when-possible nil)
@@ -297,10 +298,12 @@
   (rspec-install-snippets))
 
 (use-package yasnippet
+  :straight t
   :config
   (yas-global-mode 1))
 
 (use-package color-theme-sanityinc-solarized
+  :straight t
   :config
   (setq solarized-scale-org-headlines nil
         solarized-use-less-bold t
@@ -314,14 +317,12 @@
 
 ;; --- configure non-elpa packages -----------------------------------
 (use-package plsql
-  :straight nil
   :load-path "lib/"
   :mode ("\\.pk[bs]" . plsql-mode)
   :config
   (setq plsql-indent 4))
 
 (use-package ob-ditaa-docker
-  :straight nil
   :load-path "lib/"
   :after (org)
   :config
@@ -329,12 +330,21 @@
 
 ;; -- configure builtin packages -------------------------------------
 
+(use-package grep
+  :init
+  (setq grep-command "grep -rni")
+  :config
+  (add-to-list 'grep-find-ignored-directories "log")
+  (add-to-list 'grep-find-ignored-directories "tmp")
+  (add-to-list 'grep-find-ignored-directories "vendor")
+  (add-to-list 'grep-find-ignored-directories "coverage")
+  :bind ("C-c d e" . rgrep))
+
 ;; shell-script-mode
 (setq sh-basic-offset 2
       sh-indentation 2)
 
 (use-package uniquify
-  :straight nil
   :config
   (setq uniquify-buffer-name-style 'post-forward
 	uniquify-separator ":"
