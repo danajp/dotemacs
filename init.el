@@ -139,6 +139,7 @@
   (add-hook 'projectile-mode-hook 'projectile-rails-on))
 
 (use-package smartparens
+  :straight t
   :config
   (smartparens-global-mode)
   (show-smartparens-global-mode)
@@ -299,6 +300,9 @@
   (add-hook 'after-init-hook 'inf-ruby-switch-setup)
   (rspec-install-snippets))
 
+(use-package rubocop
+  :straight t)
+
 (use-package yasnippet
   :straight t
   :config
@@ -316,6 +320,17 @@
                    (with-selected-frame f
                      (when (window-system f)
                        (load-theme 'sanityinc-solarized-dark)))))))
+
+(use-package go-mode
+  :straight t)
+
+(use-package editorconfig
+  :straight t
+  :config
+  (editorconfig-mode 1))
+
+(use-package toml-mode
+  :straight t)
 
 ;; --- configure non-elpa packages -----------------------------------
 (use-package plsql
