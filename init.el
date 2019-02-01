@@ -294,6 +294,9 @@
   :config
   (global-rbenv-mode))
 
+(use-package inf-ruby
+  :straight t)
+
 (use-package rspec-mode
   :straight t
   :after (yasnippet)
@@ -303,6 +306,9 @@
   (rspec-install-snippets))
 
 (use-package rubocop
+  :straight t)
+
+(use-package bundler
   :straight t)
 
 (use-package yasnippet
