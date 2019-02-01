@@ -134,6 +134,8 @@
 
 (use-package projectile-rails
   :straight t
+  :bind-keymap
+  ("C-c r" . projectile-rails-command-map)
   :after (projectile)
   :config
   (add-hook 'projectile-mode-hook 'projectile-rails-on))
