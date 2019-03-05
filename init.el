@@ -1,11 +1,18 @@
-(eval-when-compile
-  (package-initialize)
-  ;; --- cask setup --------------------------------------------------
-  (require 'cask (if (file-exists-p (expand-file-name "~/.cask/cask.el"))
-                   (expand-file-name "~/.cask/cask")
-                 "/usr/local/share/emacs/site-lisp/cask"))
-  (cask-initialize)
-  (require 'use-package))
+;; --- straight boilerplate ------------------------------------------
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(straight-use-package 'use-package)
 
 ;; --- general config ------------------------------------------------
 ;; no menus, buttons, scrollbars or startup screen
@@ -52,13 +59,6 @@
 (add-to-list 'default-frame-alist '(mouse-wheel-mode . 1))
 (add-to-list 'default-frame-alist '(fringe-mode . 2))
 
-(if (daemonp)
-    (add-hook 'after-make-frame-functions
-              '(lambda (f)
-                 (with-selected-frame f
-                   (when (window-system f)
-                     (load-theme 'solarized-dark))))))
-
 ;; things I want in every file buffer
 (defun my-find-file-hook ()
   "Buffer local settings for buffers that are actually files."
@@ -96,16 +96,6 @@
   (browse-url (concat "https://duckduckgo.com/?q=" (url-hexify-string q))))
 
 ;; --- configure elpa packages ---------------------------------------
-(use-package grep
-  :init
-  (setq grep-command "grep -rni")
-  :config
-  (add-to-list 'grep-find-ignored-directories "log")
-  (add-to-list 'grep-find-ignored-directories "tmp")
-  (add-to-list 'grep-find-ignored-directories "vendor")
-  (add-to-list 'grep-find-ignored-directories "coverage")
-  :bind ("C-c d e" . rgrep))
-
 ;; commented out to avoid warnings when loaded
 ;; (use-package ido-ubiquitous
 ;;   :config
@@ -115,6 +105,7 @@
 ;;   (ido-ubiquitous-mode 0))
 
 (use-package helm
+  :straight t
   :config
   (require 'helm-config)
   (setq helm-mode-fuzzy-match t
@@ -125,11 +116,15 @@
          ("C-x b" . helm-mini)))
 
 (use-package helm-projectile
+  :straight t
   :after (helm projectile)
   :config
   (helm-projectile-on))
 
 (use-package projectile
+  :straight t
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
   :config
   (projectile-global-mode)
   (setq projectile-switch-project-action 'projectile-vc)
@@ -138,11 +133,15 @@
   (add-to-list 'projectile-globally-ignored-directories "vendor"))
 
 (use-package projectile-rails
+  :straight t
+  :bind-keymap
+  ("C-c r" . projectile-rails-command-map)
   :after (projectile)
   :config
   (add-hook 'projectile-mode-hook 'projectile-rails-on))
 
 (use-package smartparens
+  :straight t
   :config
   (smartparens-global-mode)
   (show-smartparens-global-mode)
@@ -150,6 +149,7 @@
 
 ;; org
 (use-package org
+  :straight t
   :config
   (add-hook 'org-mode-hook 'turn-on-font-lock)
   (org-clock-persistence-insinuate)
@@ -211,12 +211,16 @@
          ("C-c d o l" . org-store-link)))
 
 (use-package magit
+  :straight t
   :config
   (setq magit-repository-directories '(("~/src" . 1)
-                                       ("~/src/go/src/" . 3)))
-  :bind ("C-x g s" . magit-status))
+                                       ("~/src/go/src/" . 3))))
+
+(use-package forge
+  :straight t)
 
 (use-package yaml-mode
+  :straight t
   :mode "\\.ya?ml")
 
 (use-package php-mode
@@ -228,6 +232,7 @@
                               (setq show-trailing-whitespace t))))
 
 (use-package markdown-mode
+  :straight t
   :mode "\\.md")
 
 (use-package web-mode
@@ -273,30 +278,72 @@
   (setq css-indent-offset 2))
 
 (use-package ace-window
+  :straight t
   :config
   (setq aw-keys '(?a ?s ?d ?f ?j ?k ?l))
   :bind ("C-x o" . ace-window))
 
 (use-package ruby-mode
+  :straight t
   :config
   (setq ruby-align-to-stmt-keywords t))
 
 (use-package rbenv
+  :straight t
   :init
   (if (file-directory-p "/usr/local/bin/rbenv")
       (setq rbenv-installation-directory "/usr/local/bin/rbenv"))
   :config
   (global-rbenv-mode))
 
+(use-package inf-ruby
+  :straight t)
+
 (use-package rspec-mode
+  :straight t
+  :after (yasnippet)
   :config
   (setq rspec-use-rake-when-possible nil)
   (add-hook 'after-init-hook 'inf-ruby-switch-setup)
   (rspec-install-snippets))
 
+(use-package rubocop
+  :straight t)
+
+(use-package bundler
+  :straight t)
+
 (use-package yasnippet
+  :straight t
   :config
   (yas-global-mode 1))
+
+(use-package color-theme-sanityinc-solarized
+  :straight t
+  :config
+  (setq solarized-scale-org-headlines nil
+        solarized-use-less-bold t
+        solarized-use-variable-pitch nil)
+  (if (daemonp)
+      (add-hook 'after-make-frame-functions
+                '(lambda (f)
+                   (with-selected-frame f
+                     (when (window-system f)
+                       (load-theme 'sanityinc-solarized-dark)))))))
+
+(use-package go-mode
+  :straight t)
+
+(use-package editorconfig
+  :straight t
+  :config
+  (editorconfig-mode 1))
+
+(use-package toml-mode
+  :straight t)
+
+(use-package dockerfile-mode
+  :straight t)
 
 ;; --- configure non-elpa packages -----------------------------------
 (use-package plsql
@@ -312,6 +359,16 @@
   (add-to-list 'org-babel-load-languages '(ditaa-docker . t)))
 
 ;; -- configure builtin packages -------------------------------------
+
+(use-package grep
+  :init
+  (setq grep-command "grep -rni")
+  :config
+  (add-to-list 'grep-find-ignored-directories "log")
+  (add-to-list 'grep-find-ignored-directories "tmp")
+  (add-to-list 'grep-find-ignored-directories "vendor")
+  (add-to-list 'grep-find-ignored-directories "coverage")
+  :bind ("C-c d e" . rgrep))
 
 ;; shell-script-mode
 (setq sh-basic-offset 2
@@ -396,12 +453,6 @@
 (global-set-key (kbd "C-c d s") 'my-ddg-search)
 (global-set-key (kbd "C-c d R") 'revert-buffer)
 (global-set-key (kbd "C-x r u") 'my-upcase-rectangle)
-
-
-;; --- solarized theme -----------------------------------------------
-(setq solarized-scale-org-headlines nil
-      solarized-use-less-bold t
-      solarized-use-variable-pitch nil)
 
 ;; load additional local configuration if it exists
 (when (file-exists-p "~/.emacs.d/local.el")

@@ -7,8 +7,9 @@ local.el
 url/cookies
 tramp
 bookmarks
-.cask/
 projectile-bookmarks.eld
 ac-comphist.dat
 ido.last
 recentf
+straight/
+forge-database.sqlite
