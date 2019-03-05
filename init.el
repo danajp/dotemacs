@@ -216,6 +216,9 @@
   (setq magit-repository-directories '(("~/src" . 1)
                                        ("~/src/go/src/" . 3))))
 
+(use-package forge
+  :straight t)
+
 (use-package yaml-mode
   :straight t
   :mode "\\.ya?ml")
