@@ -339,6 +339,9 @@
 (use-package toml-mode
   :straight t)
 
+(use-package dockerfile-mode
+  :straight t)
+
 ;; --- configure non-elpa packages -----------------------------------
 (use-package plsql
   :load-path "lib/"
