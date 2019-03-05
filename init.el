@@ -214,8 +214,7 @@
   :straight t
   :config
   (setq magit-repository-directories '(("~/src" . 1)
-                                       ("~/src/go/src/" . 3)))
-  :bind ("C-x g s" . magit-status))
+                                       ("~/src/go/src/" . 3))))
 
 (use-package yaml-mode
   :straight t
