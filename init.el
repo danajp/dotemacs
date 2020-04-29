@@ -55,7 +55,7 @@
   (setq browse-url-browser-function 'browse-url-default-browser))
 
 ;; gui stuff
-(add-to-list 'default-frame-alist '(font . "Terminus-12"))
+(add-to-list 'default-frame-alist '(font . "Terminus-11"))
 (add-to-list 'default-frame-alist '(mouse-wheel-mode . 1))
 (add-to-list 'default-frame-alist '(fringe-mode . 2))
 
