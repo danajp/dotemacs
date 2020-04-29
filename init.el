@@ -345,6 +345,9 @@
 (use-package dockerfile-mode
   :straight t)
 
+(use-package terraform-mode
+  :straight t)
+
 ;; --- configure non-elpa packages -----------------------------------
 (use-package plsql
   :load-path "lib/"
