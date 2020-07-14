@@ -348,6 +348,9 @@
 (use-package terraform-mode
   :straight t)
 
+(use-package jsonnet-mode
+  :straight t)
+
 ;; --- configure non-elpa packages -----------------------------------
 (use-package plsql
   :load-path "lib/"
