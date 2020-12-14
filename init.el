@@ -96,30 +96,13 @@
   (browse-url (concat "https://duckduckgo.com/?q=" (url-hexify-string q))))
 
 ;; --- configure elpa packages ---------------------------------------
-;; commented out to avoid warnings when loaded
-;; (use-package ido-ubiquitous
-;;   :config
-;;   (setq ido-enable-flex-matching t
-;;         ido-auto-merge-work-directories-length -1)
-;;   (ido-mode 0)
-;;   (ido-ubiquitous-mode 0))
-
-(use-package helm
+(use-package counsel
   :straight t
   :config
-  (require 'helm-config)
-  (setq helm-mode-fuzzy-match t
-        helm-grep-file-path-style 'relative)
-  (helm-mode 1)
-  :bind (("M-x" . helm-M-x)
-         ("C-x C-f" . helm-find-files)
-         ("C-x b" . helm-mini)))
-
-(use-package helm-projectile
-  :straight t
-  :after (helm projectile)
-  :config
-  (helm-projectile-on))
+  (ivy-mode 1)
+  (counsel-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  :bind (("C-s" . swiper-isearch)))
 
 (use-package projectile
   :straight t
