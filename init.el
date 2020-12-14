@@ -115,6 +115,12 @@
   (add-to-list 'projectile-globally-ignored-directories "tmp")
   (add-to-list 'projectile-globally-ignored-directories "vendor"))
 
+(use-package counsel-projectile
+  :straight t
+  :after (projectile)
+  :config
+  (counsel-projectile-mode))
+
 (use-package projectile-rails
   :straight t
   :bind-keymap
