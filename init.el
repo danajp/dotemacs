@@ -98,6 +98,7 @@
 ;; --- configure elpa packages ---------------------------------------
 (use-package counsel
   :straight t
+  :demand t
   :config
   (ivy-mode 1)
   (counsel-mode 1)
@@ -117,9 +118,10 @@
 
 (use-package counsel-projectile
   :straight t
-  :after (projectile)
+  :after (projectile counsel)
   :config
-  (counsel-projectile-mode))
+  (counsel-projectile-mode)
+  (setq counsel-projectile-switch-project-action 'counsel-projectile-switch-project-action-vc))
 
 (use-package projectile-rails
   :straight t
