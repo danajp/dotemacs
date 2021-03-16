@@ -347,6 +347,9 @@
   (add-hook 'go-mode-hook #'lsp)
   (add-hook 'ruby-mode-hook #'lsp))
 
+(use-package protobuf-mode
+  :straight t)
+
 ;; --- configure non-elpa packages -----------------------------------
 (use-package plsql
   :load-path "lib/"
