@@ -363,6 +363,7 @@
   (add-to-list 'grep-find-ignored-directories "tmp")
   (add-to-list 'grep-find-ignored-directories "vendor")
   (add-to-list 'grep-find-ignored-directories "coverage")
+  (add-to-list 'grep-find-ignored-directories ".venv")
   :bind ("C-c d e" . rgrep))
 
 ;; shell-script-mode
