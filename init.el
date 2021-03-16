@@ -340,6 +340,13 @@
 (use-package jsonnet-mode
   :straight t)
 
+(use-package lsp-ui
+  :straight t
+  :config
+  (setq lsp-keymap-prefix "C-M-;")
+  (add-hook 'go-mode-hook #'lsp)
+  (add-hook 'ruby-mode-hook #'lsp))
+
 ;; --- configure non-elpa packages -----------------------------------
 (use-package plsql
   :load-path "lib/"
