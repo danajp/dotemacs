@@ -249,10 +249,10 @@
                                           (org-present-small)
                                           (org-remove-inline-images))))
 
-(use-package auto-complete
+(use-package company
+  :straight t
   :config
-  (require 'auto-complete-config)
-  (ac-config-default))
+  (global-company-mode))
 
 (use-package haskell-mode
   :config
