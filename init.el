@@ -324,7 +324,9 @@
                        (load-theme 'sanityinc-solarized-dark)))))))
 
 (use-package go-mode
-  :straight t)
+  :straight t
+  :config
+  (setq godoc-at-point-function 'godoc-gogetdoc))
 
 (use-package editorconfig
   :straight t
