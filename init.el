@@ -338,7 +338,8 @@
 (use-package lsp-ui
   :straight t
   :config
-  (setq lsp-keymap-prefix "C-M-;")
+  (setq lsp-keymap-prefix "C-M-;"
+        lsp-solargraph-multi-root nil)
   (add-hook 'go-mode-hook #'lsp)
   (add-hook 'ruby-mode-hook #'lsp))
 
