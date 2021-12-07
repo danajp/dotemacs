@@ -278,15 +278,8 @@
 (use-package ruby-mode
   :straight t
   :config
-  (setq ruby-align-to-stmt-keywords t))
-
-(use-package rbenv
-  :straight t
-  :init
-  (if (file-directory-p "/usr/local/bin/rbenv")
-      (setq rbenv-installation-directory "/usr/local/bin/rbenv"))
-  :config
-  (global-rbenv-mode))
+  (setq ruby-align-to-stmt-keywords t
+        ruby-flymake-use-rubocop-if-available nil))
 
 (use-package inf-ruby
   :straight t)
@@ -298,9 +291,6 @@
   (setq rspec-use-rake-when-possible nil)
   (add-hook 'after-init-hook 'inf-ruby-switch-setup)
   (rspec-install-snippets))
-
-(use-package rubocop
-  :straight t)
 
 (use-package bundler
   :straight t)
