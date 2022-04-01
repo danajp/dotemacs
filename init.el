@@ -77,6 +77,13 @@
   (interactive)
   (kill-new (buffer-file-name (current-buffer))))
 
+(defun my-buffer-file-name-in-project-to-kill-ring ()
+  "Put the name of the current buffer relative to the current project into the kill ring"
+  (interactive)
+  (let ((root (projectile-project-root)))
+    (if (not (eq root nil))
+        (kill-new
+         (string-remove-prefix root (buffer-file-name (current-buffer)))))))
 
 (defun my-upcase-rectangle-line (startcol endcol)
   (when (= (move-to-column startcol) startcol)
@@ -94,6 +101,15 @@
   "Run a search on DuckDuckGo"
   (interactive "ssearch duckduckgo: ")
   (browse-url (concat "https://duckduckgo.com/?q=" (url-hexify-string q))))
+
+(defun my-delete-this-file ()
+  "Delete the file this buffer is visiting, if any"
+  (interactive)
+  (let ((filename (buffer-file-name (current-buffer))))
+       (if (stringp filename)
+           (progn
+             (delete-file filename)
+             (kill-buffer (current-buffer))))))
 
 ;; --- configure elpa packages ---------------------------------------
 (use-package counsel
