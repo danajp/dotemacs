@@ -354,8 +354,13 @@
 (use-package lsp-ui
   :straight t
   :config
-  (setq lsp-keymap-prefix "C-M-;"
-        lsp-solargraph-multi-root nil)
+  (setq lsp-solargraph-multi-root nil
+        lsp-ui-sideline-show-code-actions t
+        lsp-ui-sideline-show-diagnostics t
+        lsp-ui-sideline-show-hover nil
+        lsp-ui-sideline-show-symbol t
+        lsp-ui-doc-enable t)
+  (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
   (add-hook 'go-mode-hook #'lsp)
   (add-hook 'ruby-mode-hook #'lsp))
 
