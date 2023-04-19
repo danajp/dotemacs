@@ -335,7 +335,14 @@
 (use-package go-mode
   :straight t
   :config
-  (setq godoc-at-point-function 'godoc-gogetdoc))
+  (setq godoc-at-point-function 'godoc-gogetdoc
+        gofmt-command "goimports"))
+
+(use-package gotest
+  :straight t
+  :config
+  (define-key go-mode-map (kbd "C-c , s") 'go-test-current-test)
+  (define-key go-mode-map (kbd "C-c , v") 'go-test-current-file))
 
 (use-package editorconfig
   :straight t
