@@ -369,10 +369,16 @@
         lsp-ui-sideline-show-diagnostics t
         lsp-ui-sideline-show-hover nil
         lsp-ui-sideline-show-symbol t
-        lsp-ui-doc-enable t)
+        lsp-ui-doc-enable t
+        lsp-yaml-server-command (let* ((nodejs-version (cadr (split-string
+                                                              (shell-command-to-string "cd; asdf current nodejs")" +")))
+                                       (env (format "ASDF_NODEJS_VERSION=%s" nodejs-version)))
+                                  (list "env" "--" env "yaml-language-server" "--stdio")))
   (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
   (add-hook 'go-mode-hook #'lsp)
-  (add-hook 'ruby-mode-hook #'lsp))
+  (add-hook 'ruby-mode-hook #'lsp)
+  (add-hook 'yaml-mode-hook #'lsp)
+  (add-hook 'terraform-mode-hook #'lsp))
 
 (use-package protobuf-mode
   :straight t)
