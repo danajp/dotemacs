@@ -223,6 +223,9 @@
   (setq magit-repository-directories '(("~/src" . 1)
                                        ("~/src/go/src/" . 3))))
 
+(use-package git-link
+  :straight t)
+
 (use-package forge
   :straight t
   :after magit)
