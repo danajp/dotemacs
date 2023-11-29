@@ -451,7 +451,7 @@
 			(name . "^\\*Apropos\\*$")
 			(name . "^\\*Help\\*$")
 			(name . "^\\*Completions\\*")))
-	   ("temp" (name . "^\\*.+\\*$")))))
+	   ("temp" (name . "^\\*.+\\*\\(<[[:digit:]]+>\\)?$")))))
   (add-hook 'ibuffer-mode-hook (lambda ()
 				 (ibuffer-switch-to-saved-filter-groups "default"))))
 
