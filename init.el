@@ -128,10 +128,18 @@
   ("C-c p" . projectile-command-map)
   :config
   (projectile-global-mode)
-  (setq projectile-switch-project-action 'projectile-vc)
+  (setq projectile-switch-project-action 'projectile-vc
+        projectile-indexing-method 'hybrid)
+  (add-to-list 'projectile-globally-ignored-directories "^log$")
+  (add-to-list 'projectile-globally-ignored-directories "^tmp$")
+  (add-to-list 'projectile-globally-ignored-directories "^vendor$")
   (add-to-list 'projectile-globally-ignored-directories "log")
   (add-to-list 'projectile-globally-ignored-directories "tmp")
-  (add-to-list 'projectile-globally-ignored-directories "vendor"))
+  (add-to-list 'projectile-globally-ignored-directories ".git")
+  (add-to-list 'projectile-globally-ignored-directories "vendor")
+  (add-to-list 'projectile-globally-ignored-file-suffixes ".key")
+  (add-to-list 'projectile-globally-ignored-file-suffixes ".crt")
+  (add-to-list 'projectile-globally-ignored-file-suffixes ".pem"))
 
 (use-package counsel-projectile
   :straight t
