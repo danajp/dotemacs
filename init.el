@@ -235,10 +235,6 @@
 (use-package git-link
   :straight t)
 
-(use-package forge
-  :straight t
-  :after magit)
-
 (use-package yaml-mode
   :straight t
   :mode "\\.ya?ml")
