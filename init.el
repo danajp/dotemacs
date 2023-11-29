@@ -381,9 +381,16 @@
   (add-hook 'go-mode-hook #'lsp)
   (add-hook 'ruby-mode-hook #'lsp)
   (add-hook 'yaml-mode-hook #'lsp)
-  (add-hook 'terraform-mode-hook #'lsp))
+  ;;(add-hook 'terraform-mode-hook #'lsp)
+  )
 
 (use-package protobuf-mode
+  :straight t)
+
+(use-package rego-mode
+  :straight t)
+
+(use-package graphviz-dot-mode
   :straight t)
 
 ;; --- configure non-elpa packages -----------------------------------
