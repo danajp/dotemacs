@@ -18,7 +18,9 @@
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-(setq inhibit-startup-screen t)
+(setq inhibit-startup-screen t
+      warning-minimum-level :error
+      enable-local-variables :safe)
 
 ;; put backups in one place instead of littering the file system with files~
 (add-to-list 'backup-directory-alist '("." . "~/.emacs.d/backups"))
