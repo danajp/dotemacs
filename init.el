@@ -363,7 +363,9 @@
   :straight t)
 
 (use-package terraform-mode
-  :straight t)
+  :straight t
+  :config
+  (setq terraform-format-on-save t))
 
 (use-package jsonnet-mode
   :straight t)
