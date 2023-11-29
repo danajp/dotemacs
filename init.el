@@ -503,6 +503,10 @@
 (global-set-key (kbd "C-c d R") 'revert-buffer)
 (global-set-key (kbd "C-x r u") 'my-upcase-rectangle)
 
+(use-package flymake
+  :bind (("M-n" . flymake-goto-next-error)
+         ("M-p" . flymake-goto-prev-error)))
+
 ;; load additional local configuration if it exists
 (when (file-exists-p "~/.emacs.d/local.el")
   (load-file "~/.emacs.d/local.el"))
