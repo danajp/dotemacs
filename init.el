@@ -278,6 +278,7 @@
   (global-company-mode))
 
 (use-package haskell-mode
+  :defer t
   :config
   (add-hook 'haskell-mode-hook 'haskell-simple-indent-mode))
 
@@ -286,6 +287,7 @@
   (setq js-indent-level 2))
 
 (use-package scss-mode
+  :defer t
   :config
   (setq css-indent-offset 2))
 
