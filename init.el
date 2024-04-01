@@ -348,7 +348,8 @@
   :straight t
   :config
   (setq godoc-at-point-function 'godoc-gogetdoc
-        gofmt-command "goimports"))
+        gofmt-command "goimports")
+  (add-hook 'before-save-hook 'gofmt-before-save))
 
 (use-package gotest
   :straight t
