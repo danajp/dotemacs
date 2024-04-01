@@ -251,6 +251,10 @@
   :straight t
   :mode "\\.md")
 
+(use-package nix-mode
+  :straight t
+  :mode "\\.nix")
+
 (use-package web-mode
   :mode (("\\.html?\\'" . web-mode)
          ("\\.html?\\.erb\\'" . web-mode))
