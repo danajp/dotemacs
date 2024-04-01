@@ -272,6 +272,7 @@
 ;; org-present
 (use-package org-present
   :after (org)
+  :defer t
   :config
   (add-hook 'org-present-mode-hook (lambda ()
                                      (org-present-big)
