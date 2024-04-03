@@ -114,6 +114,14 @@
              (kill-buffer (current-buffer))))))
 
 ;; --- configure elpa packages ---------------------------------------
+
+;; in buffer completion
+(use-package company
+  :straight t
+  :config
+  (global-company-mode))
+
+;;
 (use-package counsel
   :straight t
   :demand t
@@ -122,6 +130,13 @@
   (counsel-mode 1)
   (setq ivy-use-virtual-buffers t)
   :bind (("C-s" . swiper-isearch)))
+
+;; window navigation
+(use-package ace-window
+  :straight t
+  :config
+  (setq aw-keys '(?a ?s ?d ?f ?j ?k ?l))
+  :bind ("C-x o" . ace-window))
 
 (use-package projectile
   :straight t
@@ -157,12 +172,6 @@
   :config
   (add-hook 'projectile-mode-hook 'projectile-rails-on))
 
-(use-package smartparens
-  :straight t
-  :config
-  (smartparens-global-mode)
-  (show-smartparens-global-mode)
-  (require 'smartparens-config))
 
 ;; org
 (use-package org
@@ -227,6 +236,39 @@
          ("C-c d o c" . org-capture)
          ("C-c d o l" . org-store-link)))
 
+;; org-present
+(use-package org-present
+  :after (org)
+  :defer t
+  :config
+  (add-hook 'org-present-mode-hook (lambda ()
+                                     (org-present-big)
+                                     (org-display-inline-images)))
+  (add-hook 'org-present-mode-quit-hook (lambda ()
+                                          (org-present-small)
+                                          (org-remove-inline-images))))
+
+(use-package flymake
+  :bind (("M-n" . flymake-goto-next-error)
+         ("M-p" . flymake-goto-prev-error)))
+
+(use-package smartparens
+  :straight t
+  :config
+  (smartparens-global-mode)
+  (show-smartparens-global-mode)
+  (require 'smartparens-config))
+
+(use-package yasnippet
+  :straight t
+  :config
+  (yas-global-mode 1))
+
+(use-package editorconfig
+  :straight t
+  :config
+  (editorconfig-mode 1))
+
 (use-package magit
   :straight t
   :config
@@ -235,6 +277,8 @@
 
 (use-package git-link
   :straight t)
+
+;; --- language modes ------------------------------------------------
 
 (use-package yaml-mode
   :straight t
@@ -270,23 +314,6 @@
   (add-hook 'web-mode-hook 'zencoding-mode)
   (setq zencoding-indentation 2))
 
-;; org-present
-(use-package org-present
-  :after (org)
-  :defer t
-  :config
-  (add-hook 'org-present-mode-hook (lambda ()
-                                     (org-present-big)
-                                     (org-display-inline-images)))
-  (add-hook 'org-present-mode-quit-hook (lambda ()
-                                          (org-present-small)
-                                          (org-remove-inline-images))))
-
-(use-package company
-  :straight t
-  :config
-  (global-company-mode))
-
 (use-package haskell-mode
   :defer t
   :config
@@ -300,12 +327,6 @@
   :defer t
   :config
   (setq css-indent-offset 2))
-
-(use-package ace-window
-  :straight t
-  :config
-  (setq aw-keys '(?a ?s ?d ?f ?j ?k ?l))
-  :bind ("C-x o" . ace-window))
 
 (use-package ruby-mode
   :straight t
@@ -326,11 +347,6 @@
 
 (use-package bundler
   :straight t)
-
-(use-package yasnippet
-  :straight t
-  :config
-  (yas-global-mode 1))
 
 (use-package color-theme-sanityinc-solarized
   :straight t
@@ -357,11 +373,6 @@
   :config
   (define-key go-mode-map (kbd "C-c , s") 'go-test-current-test)
   (define-key go-mode-map (kbd "C-c , v") 'go-test-current-file))
-
-(use-package editorconfig
-  :straight t
-  :config
-  (editorconfig-mode 1))
 
 (use-package toml-mode
   :straight t)
@@ -516,10 +527,6 @@
 (global-set-key (kbd "C-c d s") 'my-ddg-search)
 (global-set-key (kbd "C-c d R") 'revert-buffer)
 (global-set-key (kbd "C-x r u") 'my-upcase-rectangle)
-
-(use-package flymake
-  :bind (("M-n" . flymake-goto-next-error)
-         ("M-p" . flymake-goto-prev-error)))
 
 ;; load additional local configuration if it exists
 (when (file-exists-p "~/.emacs.d/local.el")
