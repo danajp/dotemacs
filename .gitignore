@@ -13,3 +13,5 @@ ido.last
 recentf
 straight/
 forge-database.sqlite
+eln-cache/
+transient/
