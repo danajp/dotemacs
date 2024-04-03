@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 ;; --- straight boilerplate ------------------------------------------
 (defvar bootstrap-version)
 (let ((bootstrap-file
