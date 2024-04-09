@@ -129,7 +129,8 @@
   (ivy-mode 1)
   (counsel-mode 1)
   (setq ivy-use-virtual-buffers t)
-  :bind (("C-s" . swiper-isearch)))
+  :bind (("C-s" . swiper-isearch)
+         ("C-r" . swiper-isearch-backward)))
 
 ;; window navigation
 (use-package ace-window
