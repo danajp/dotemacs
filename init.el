@@ -416,7 +416,10 @@
   (add-hook 'ruby-mode-hook #'lsp)
   (add-hook 'yaml-mode-hook #'lsp)
   ;;(add-hook 'terraform-mode-hook #'lsp)
-  )
+  :bind
+  (:map lsp-mode-map
+        ("C-c l n" . lsp-ui-find-next-reference)
+        ("C-c l p" . lsp-ui-find-prev-reference)))
 
 (use-package protobuf-mode
   :straight t)
