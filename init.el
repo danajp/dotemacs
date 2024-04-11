@@ -114,6 +114,10 @@
              (kill-buffer (current-buffer))))))
 
 ;; --- configure elpa packages ---------------------------------------
+(use-package direnv
+  :straight t
+  :config
+  (direnv-mode))
 
 ;; in buffer completion
 (use-package company
@@ -154,6 +158,8 @@
   (add-to-list 'projectile-globally-ignored-directories "tmp")
   (add-to-list 'projectile-globally-ignored-directories ".git")
   (add-to-list 'projectile-globally-ignored-directories "vendor")
+  (add-to-list 'projectile-globally-ignored-directories ".devenv")
+  (add-to-list 'projectile-globally-ignored-directories ".direnv")
   (add-to-list 'projectile-globally-ignored-file-suffixes ".key")
   (add-to-list 'projectile-globally-ignored-file-suffixes ".crt")
   (add-to-list 'projectile-globally-ignored-file-suffixes ".pem"))
