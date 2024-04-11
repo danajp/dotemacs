@@ -288,7 +288,7 @@
 (use-package php-mode
   :mode "\\.inc"
   :config
-  (add-hook 'php-mode-hook '(lambda ()
+  (add-hook 'php-mode-hook #'(lambda ()
                               (php-enable-psr2-coding-style)
                               ;; psr2 turns this off, turn it back on
                               (setq show-trailing-whitespace t))))
@@ -357,7 +357,7 @@
         solarized-use-variable-pitch nil)
   (if (daemonp)
       (add-hook 'after-make-frame-functions
-                '(lambda (f)
+                #'(lambda (f)
                    (with-selected-frame f
                      (when (window-system f)
                        (load-theme 'sanityinc-solarized-dark)))))))
