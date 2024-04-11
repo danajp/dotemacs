@@ -256,8 +256,10 @@
                                           (org-remove-inline-images))))
 
 (use-package flymake
-  :bind (("M-n" . flymake-goto-next-error)
-         ("M-p" . flymake-goto-prev-error)))
+  :bind
+  (:map flymake-mode-map
+        ("M-n" . flymake-goto-next-error)
+        ("M-p" . flymake-goto-prev-error)))
 
 (use-package smartparens
   :straight t
