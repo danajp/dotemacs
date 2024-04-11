@@ -410,6 +410,8 @@
                                        (env (format "ASDF_NODEJS_VERSION=%s" nodejs-version)))
                                   (list "env" "--" env "yaml-language-server" "--stdio")))
   (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.devenv\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]vendor\\'")
   (add-hook 'go-mode-hook #'lsp)
   (add-hook 'ruby-mode-hook #'lsp)
   (add-hook 'yaml-mode-hook #'lsp)
