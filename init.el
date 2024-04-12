@@ -287,6 +287,19 @@
 (use-package git-link
   :straight t)
 
+(use-package treesit-auto
+  :straight t
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (delete 'go treesit-auto-langs) ;; not sure why there's no font-lock in go-ts-mode
+  (global-treesit-auto-mode)
+  (treesit-auto-add-to-auto-mode-alist 'all))
+
+(use-package emacs
+  :custom
+  (treesit-font-lock-level 4))
+
 ;; --- language modes ------------------------------------------------
 
 (use-package yaml-mode
