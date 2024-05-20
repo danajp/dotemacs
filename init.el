@@ -82,7 +82,7 @@
 (defun my-buffer-file-name-in-project-to-kill-ring ()
   "Put the name of the current buffer relative to the current project into the kill ring"
   (interactive)
-  (let ((root (projectile-project-root)))
+  (let ((root (project-root)))
     (if (not (eq root nil))
         (kill-new
          (string-remove-prefix root (buffer-file-name (current-buffer)))))))
@@ -119,22 +119,59 @@
   :config
   (direnv-mode))
 
-;; in buffer completion
-(use-package company
+(use-package vertico
   :straight t
-  :config
-  (global-company-mode))
+  :init
+  (vertico-mode))
 
-;;
-(use-package counsel
+(use-package orderless
   :straight t
-  :demand t
+  :init
+  (setq completion-styles '(orderless basic)))
+
+(use-package consult
+  :straight t
+  :bind
+  (("C-s" . consult-line)
+   ("C-x b" . consult-buffer))
   :config
-  (ivy-mode 1)
-  (counsel-mode 1)
-  (setq ivy-use-virtual-buffers t)
-  :bind (("C-s" . swiper-isearch)
-         ("C-r" . swiper-isearch-backward)))
+  (advice-add #'project-find-regexp :override #'consult-grep)
+  (advice-add #'project-switch-to-buffer :override #'consult-project-buffer)
+  (advice-add #'goto-line :override #'consult-goto-line))
+
+(use-package marginalia
+  :straight t
+  :init
+  (marginalia-mode))
+
+(use-package corfu
+  :straight t
+  :init
+  (global-corfu-mode)
+  :custom
+  (corfu-auto t)
+  (corfu-quit-at-boundary nil)
+  (corfu-quit-no-match t))
+
+(use-package cape
+  :straight t
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-keyword))
+
+(use-package embark
+  :straight t
+  :bind (("C-c C-o" . embark-collect)))
+
+(use-package embark-consult
+  :straight t
+  :hook (embark-collect-mode . consult-preview-at-point-mode))
+
+(use-package savehist
+  :straight t
+  :init
+  (savehist-mode))
 
 ;; window navigation
 (use-package ace-window
@@ -142,43 +179,6 @@
   :config
   (setq aw-keys '(?a ?s ?d ?f ?j ?k ?l))
   :bind ("C-x o" . ace-window))
-
-(use-package projectile
-  :straight t
-  :bind-keymap
-  ("C-c p" . projectile-command-map)
-  :config
-  (projectile-global-mode)
-  (setq projectile-switch-project-action 'projectile-vc
-        projectile-indexing-method 'hybrid)
-  (add-to-list 'projectile-globally-ignored-directories "^log$")
-  (add-to-list 'projectile-globally-ignored-directories "^tmp$")
-  (add-to-list 'projectile-globally-ignored-directories "^vendor$")
-  (add-to-list 'projectile-globally-ignored-directories "log")
-  (add-to-list 'projectile-globally-ignored-directories "tmp")
-  (add-to-list 'projectile-globally-ignored-directories ".git")
-  (add-to-list 'projectile-globally-ignored-directories "vendor")
-  (add-to-list 'projectile-globally-ignored-directories ".devenv")
-  (add-to-list 'projectile-globally-ignored-directories ".direnv")
-  (add-to-list 'projectile-globally-ignored-file-suffixes ".key")
-  (add-to-list 'projectile-globally-ignored-file-suffixes ".crt")
-  (add-to-list 'projectile-globally-ignored-file-suffixes ".pem"))
-
-(use-package counsel-projectile
-  :straight t
-  :after (projectile counsel)
-  :config
-  (counsel-projectile-mode)
-  (setq counsel-projectile-switch-project-action 'counsel-projectile-switch-project-action-vc))
-
-(use-package projectile-rails
-  :straight t
-  :bind-keymap
-  ("C-c r" . projectile-rails-command-map)
-  :after (projectile)
-  :config
-  (add-hook 'projectile-mode-hook 'projectile-rails-on))
-
 
 ;; org
 (use-package org
@@ -280,9 +280,9 @@
 
 (use-package magit
   :straight t
-  :config
-  (setq magit-repository-directories '(("~/src" . 1)
-                                       ("~/src/go/src/" . 3))))
+  :custom
+  (magit-repository-directories '(("~/src" . 1)))
+  (magit-bind-magit-project-status t))
 
 (use-package git-link
   :straight t)
@@ -294,9 +294,11 @@
   :config
   (delete 'go treesit-auto-langs) ;; not sure why there's no font-lock in go-ts-mode
   (global-treesit-auto-mode)
-  (treesit-auto-add-to-auto-mode-alist 'all))
+  (treesit-auto-add-to-auto-mode-alist))
 
 (use-package emacs
+  :init
+  (setq tabs-always-indent 'complete)
   :custom
   (treesit-font-lock-level 4))
 
@@ -428,8 +430,12 @@
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.devenv\\'")
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]vendor\\'")
   (add-hook 'go-mode-hook #'lsp)
+  (add-hook 'go-ts-mode-hook #'lsp)
   (add-hook 'ruby-mode-hook #'lsp)
+  (add-hook 'ruby-ts-mode-hook #'lsp)
   (add-hook 'yaml-mode-hook #'lsp)
+  (add-hook 'yaml-ts-mode-hook #'lsp)
+  (add-hook 'bash-ts-mode-hook #'lsp)
   ;;(add-hook 'terraform-mode-hook #'lsp)
   :bind
   (:map lsp-mode-map
@@ -469,6 +475,10 @@
   (add-to-list 'grep-find-ignored-directories "vendor")
   (add-to-list 'grep-find-ignored-directories "coverage")
   (add-to-list 'grep-find-ignored-directories ".venv")
+  (add-to-list 'grep-find-ignored-directories ".direnv")
+  (add-to-list 'grep-find-ignored-directories ".devenv")
+  (add-to-list 'grep-find-ignored-files "*.key")
+  (add-to-list 'grep-find-ignored-files "*.pem")
   :bind ("C-c d e" . rgrep))
 
 ;; shell-script-mode
@@ -566,56 +576,49 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(compilation-message-face (quote default))
+ '(compilation-message-face 'default)
  '(cua-global-mark-cursor-color "#2aa198")
  '(cua-normal-cursor-color "#839496")
  '(cua-overwrite-cursor-color "#b58900")
  '(cua-read-only-cursor-color "#859900")
- '(custom-enabled-themes (quote (sanityinc-solarized-dark)))
+ '(custom-enabled-themes '(sanityinc-solarized-dark))
  '(custom-safe-themes
-   (quote
-    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
- '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
+   '("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default))
+ '(highlight-changes-colors '("#d33682" "#6c71c4"))
  '(highlight-symbol-colors
    (--map
     (solarized-color-blend it "#002b36" 0.25)
-    (quote
-     ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
+    '("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2")))
  '(highlight-symbol-foreground-color "#93a1a1")
  '(highlight-tail-colors
-   (quote
-    (("#073642" . 0)
+   '(("#073642" . 0)
      ("#546E00" . 20)
      ("#00736F" . 30)
      ("#00629D" . 50)
      ("#7B6000" . 60)
      ("#8B2C02" . 70)
      ("#93115C" . 85)
-     ("#073642" . 100))))
+     ("#073642" . 100)))
  '(hl-bg-colors
-   (quote
-    ("#7B6000" "#8B2C02" "#990A1B" "#93115C" "#3F4D91" "#00629D" "#00736F" "#546E00")))
+   '("#7B6000" "#8B2C02" "#990A1B" "#93115C" "#3F4D91" "#00629D" "#00736F" "#546E00"))
  '(hl-fg-colors
-   (quote
-    ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
+   '("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36"))
  '(magit-diff-use-overlays nil)
  '(package-selected-packages
-   (quote
-    (use-package groovy-mode ruby-tools go-mode yasnippet yaml-mode web-mode solarized-theme smartparens shut-up scss-mode rubocop rspec-mode robe rbenv projectile-rails php-mode markdown-mode magit ido-ubiquitous editorconfig dockerfile-mode color-theme-sanityinc-solarized coffee-mode ace-window)))
+   '(use-package groovy-mode ruby-tools go-mode yasnippet yaml-mode web-mode solarized-theme smartparens shut-up scss-mode rubocop rspec-mode robe rbenv projectile-rails php-mode markdown-mode magit ido-ubiquitous editorconfig dockerfile-mode color-theme-sanityinc-solarized coffee-mode ace-window))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
-   (quote
-    ((rspec-use-bundler-when-possible)
+   '((rspec-use-bundler-when-possible)
      (rspec-spec-command . "./local/exec rspec")
      (org-enable-table-editor)
-     (c-indent-level . 8))))
+     (c-indent-level . 8)))
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
  '(term-default-bg-color "#002b36")
  '(term-default-fg-color "#839496")
+ '(warning-suppress-types '((use-package)))
  '(weechat-color-list
-   (quote
-    (unspecified "#002b36" "#073642" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#839496" "#657b83"))))
+   '(unspecified "#002b36" "#073642" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#839496" "#657b83")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
