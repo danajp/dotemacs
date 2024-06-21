@@ -292,7 +292,8 @@
   :custom
   (treesit-auto-install 'prompt)
   :config
-  (delete 'go treesit-auto-langs) ;; not sure why there's no font-lock in go-ts-mode
+  ;; no font-lock in go-ts-mode, no indentation in yaml-ts-mode
+  (delete 'go 'yaml treesit-auto-langs)
   (global-treesit-auto-mode)
   (treesit-auto-add-to-auto-mode-alist))
 
@@ -434,7 +435,6 @@
   (add-hook 'ruby-mode-hook #'lsp)
   (add-hook 'ruby-ts-mode-hook #'lsp)
   (add-hook 'yaml-mode-hook #'lsp)
-  (add-hook 'yaml-ts-mode-hook #'lsp)
   (add-hook 'bash-ts-mode-hook #'lsp)
   ;;(add-hook 'terraform-mode-hook #'lsp)
   :bind
