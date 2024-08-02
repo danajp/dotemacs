@@ -424,6 +424,7 @@
         lsp-ui-sideline-show-symbol t
         lsp-ui-doc-enable t
         lsp-file-watch-threshold 7000
+        lsp-keep-workspace-alive nil
         lsp-yaml-server-command (let* ((nodejs-version (cadr (split-string
                                                               (shell-command-to-string "cd; asdf current nodejs")" +")))
                                        (env (format "ASDF_NODEJS_VERSION=%s" nodejs-version)))
