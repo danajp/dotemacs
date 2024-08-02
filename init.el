@@ -293,7 +293,8 @@
   (treesit-auto-install 'prompt)
   :config
   ;; no font-lock in go-ts-mode, no indentation in yaml-ts-mode
-  (delete 'go 'yaml treesit-auto-langs)
+  (delete 'go treesit-auto-langs)
+  (delete 'yaml treesit-auto-langs)
   (global-treesit-auto-mode)
   (treesit-auto-add-to-auto-mode-alist))
 
