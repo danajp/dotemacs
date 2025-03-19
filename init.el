@@ -304,6 +304,19 @@
   :custom
   (treesit-font-lock-level 4))
 
+(use-package gptel
+  :straight t
+  :config
+  (setq gptel-backend
+        (gptel-make-openai "grok"
+          :host "api.x.ai"
+          :key ""
+          :endpoint "/v1/chat/completions"
+          :stream t
+          :models '(grok-beta)))
+  (setq gptel-model 'grok-beta)
+  (setq gptel-default-mode 'org-mode))
+
 ;; --- language modes ------------------------------------------------
 
 (use-package yaml-mode
