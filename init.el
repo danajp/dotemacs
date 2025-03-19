@@ -426,7 +426,7 @@
         lsp-file-watch-threshold 7000
         lsp-keep-workspace-alive nil
         lsp-yaml-server-command (let* ((nodejs-version (cadr (split-string
-                                                              (shell-command-to-string "cd; asdf current nodejs")" +")))
+                                                              (shell-command-to-string "cd; asdf current --no-header nodejs")" +")))
                                        (env (format "ASDF_NODEJS_VERSION=%s" nodejs-version)))
                                   (list "env" "--" env "yaml-language-server" "--stdio")))
   (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
