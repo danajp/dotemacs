@@ -317,6 +317,15 @@
   (setq gptel-model 'grok-beta)
   (setq gptel-default-mode 'org-mode))
 
+(use-package copilot
+  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
+  :ensure t
+  :config
+  (add-hook 'prog-mode-hook 'copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . copilot-accept-completion)
+              ("C-<tab>" . copilot-accept-completion-by-word)))
+
 ;; --- language modes ------------------------------------------------
 
 (use-package yaml-mode
