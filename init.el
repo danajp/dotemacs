@@ -532,6 +532,7 @@
   (add-to-list 'grep-find-ignored-directories "log")
   (add-to-list 'grep-find-ignored-directories "tmp")
   (add-to-list 'grep-find-ignored-directories "vendor")
+  (add-to-list 'grep-find-ignored-directories "node_modules")
   (add-to-list 'grep-find-ignored-directories "coverage")
   (add-to-list 'grep-find-ignored-directories ".venv")
   (add-to-list 'grep-find-ignored-directories ".direnv")
