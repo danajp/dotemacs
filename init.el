@@ -314,7 +314,9 @@
           :endpoint "/v1/chat/completions"
           :stream t
           :models '(grok-beta)))
-  (setq gptel-model 'grok-beta)
+  (setq gptel-backend
+        (gptel-make-gh-copilot "Copilot"))
+;;  (setq gptel-model 'grok-beta)
   (setq gptel-default-mode 'org-mode))
 
 (use-package copilot
