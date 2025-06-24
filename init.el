@@ -525,6 +525,14 @@
 
 ;; -- configure builtin packages -------------------------------------
 
+(use-package project
+  ;; Adds magit to project-switch-project menu before magit is autoloaded
+  :config
+  (add-to-list 'project-switch-commands '(magit-project-status "Magit") t)
+  :bind
+  (:map project-prefix-map
+        ("m" . #'magit-project-status)))
+
 (use-package grep
   :init
   (setq grep-command "grep -rni")
