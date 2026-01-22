@@ -16,3 +16,7 @@ forge-database.sqlite
 eln-cache/
 transient/
 tree-sitter/
+projects
+.cache/
+history
+.lsp-session-v1
