@@ -150,8 +150,10 @@
   (global-corfu-mode)
   :custom
   (corfu-auto t)
-  (corfu-quit-at-boundary nil)
-  (corfu-quit-no-match t))
+  (corfu-quit-at-boundary 'separator)  ; quit at . but not if completing after it
+  (corfu-quit-no-match t)
+  (corfu-auto-delay 0.3)
+  (corfu-auto-prefix 2))  ; require 2 chars before auto-popup
 
 (use-package cape
   :straight t
